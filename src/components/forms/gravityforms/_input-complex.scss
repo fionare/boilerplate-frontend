@@ -1,0 +1,85 @@
+// Almost every complex group is wrapped by this
+.ginput_complex {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -($gfo-space-column * 0.5);
+  margin-right: -($gfo-space-column * 0.5);
+}
+
+// Full Name
+.ginput_container_name {
+  & > * {
+    flex-basis: 50%;
+    width: auto;
+    padding-left: $gfo-space-column * 0.5;
+    padding-right: $gfo-space-column * 0.5;
+  }
+
+  label {
+    @extend %gfo-hint-text;
+  }
+}
+
+// Time
+// Probably it's better not to use this, use <select> instead
+.gfield_time_hour,
+.gfield_time_minute,
+.gfield_time_ampm {
+  display: inline-flex;
+  vertical-align: top;
+  padding-left: 0;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  input[type='number'] {
+    @extend %gfo-input-number-limit-width;
+  }
+
+  label {
+    width: 100%;
+    @extend %gfo-hint-text;
+  }
+
+  i {
+    display: none;
+  }
+}
+
+// Address set
+.ginput_container_address {
+  & > * {
+    width: auto;
+    padding-left: $gfo-space-column * 0.5;
+    padding-right: $gfo-space-column * 0.5;
+  }
+
+  .ginput_full {
+    flex-basis: 100%;
+  }
+
+  .ginput_left,
+  .ginput_right {
+    flex-basis: 50%;
+  }
+
+  label {
+    @extend %gfo-hint-text;
+    margin-bottom: $gfo-space-row * 0.5;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $gfo-space-row;
+    }
+  }
+
+  .address_country {
+    @extend %gfo-select-arrow;
+
+    &:after {
+      right: $gfo-select-arrow-right + ($gfo-space-column * 0.5);
+    }
+  }
+}
+
+// Quantity (set of Product)
+.gfield_quantity {
+}

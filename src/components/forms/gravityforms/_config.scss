@@ -1,0 +1,102 @@
+// [ Layout Spacer ]
+//  Used for horizontal and vertical spacing
+
+$gfo-space-small: 5px;
+$gfo-space-medium: 10px;
+$gfo-space-large: 20px;
+
+$gfo-space-row: $gfo-space-large; // vertical spacing between field
+$gfo-space-column: $gfo-space-large; // horizontal spacing between layout column
+
+// [ Form Wrapper ]
+
+$gfo-wrapper-bg: $white; // full property
+$gfo-wrapper-border: none; // full property
+$gfo-wrapper-padding: $gfo-space-large;
+$gfo-wrapper-padding-mobile: 0; // 0 if you need the wrapper to expand full width on mobile
+
+// [ Layout Width ]
+// ⊢ Adjust this when embedding the form in a small container
+
+$gfo-size-small: 30%; // small size will become medium on mobile
+$gfo-size-medium: 50%; // medium will become full on mobile
+$gfo-size-large: 100%; // large will become full on mobile
+$gfo-size-full: 100%;
+
+// [ Colors ]
+
+$gfo-color-important: #ff6c6c; // primary for error
+$gfo-color-warning: #eb9d1d; // primary for warning
+
+// TODO: Bootstrap color class
+
+// [ Others ]
+
+$gfo-font-size: $font-size-base; // Base font to scale all the font sizes
+$gfo-border-radius: 3px;
+
+// [ Form Heading ]
+// ⊢ Using 'em' unit would makes it easier when you need to
+//   do multi-language or quick switch between media queries
+
+$gfo-title-font-size: 1.5em;
+$gfo-description-font-size: 0.9em;
+
+// [ Label ]
+
+$gfo-label-font-size: 0.9em;
+$gfo-label-font-weight: 700;
+$gfo-label-color: $primary; // TODO: Bootstrap color class
+$gfo-label-style: none; // uppercase
+
+// [ Hint ]
+
+$gfo-hint-font-size: 0.75em;
+$gfo-hint-color: transparentize(
+  $body-color,
+  0.3
+); // TODO: Bootstrap color class
+
+// [ Error ]
+// ⊢ When error triggers
+
+$gfo-error-label-color: mix(
+  $gfo-label-color,
+  $gfo-color-important,
+  30%
+); // <label>, excluding checkbox's and radio's
+$gfo-error-backdrop-bleed: $gfo-space-column * 0.5; // Determine whether the backdrop will expand to the wrapper
+$gfo-error-backdrop-radius: 0; // Add border radius
+$gfo-error-backdrop-padding: $gfo-space-row * 0.5; // Add vertical padding
+$gfo-error-backdrop-color: lighten(
+  $gfo-color-important,
+  27.5%
+); // Add background color
+
+$gfo-validation-font-size: 0.75em;
+
+// [ Input Styles ]
+
+$gfo-input-color: $body-color; // TODO: Bootstrap color class
+
+// ⊢ <input type="text">
+// ⊢ <input type="number">
+// ⊢ <input type="search">
+// ⊢ <input type="email">
+// ⊢ <input type="tel">
+// ⊢ <input type="url">
+// ⊢ <textarea>
+
+$gfo-box-height: 48px;
+$gfo-box-background: #f9fbfd; // TODO: Color class
+$gfo-box-border: 2px solid #dfe5eb; // TODO: Color class
+$gfo-box-border-radius: $gfo-border-radius;
+
+// ⊢ <select>
+// ⊢− Dropdown arrow
+
+$gfo-select-arrow-size: 6px;
+$gfo-select-arrow-color: #dfe5eb; // TODO: Color class
+$gfo-select-arrow-right: $gfo-space-medium;
+
+// TODO: Button styles

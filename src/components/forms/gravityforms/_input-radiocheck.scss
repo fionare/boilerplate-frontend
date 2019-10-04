@@ -1,0 +1,56 @@
+.ginput_container {
+  input[type='radio'],
+  input[type='checkbox'] {
+    vertical-align: middle;
+    cursor: pointer;
+
+    & + label {
+      margin-bottom: 0;
+      padding-left: $gfo-space-small;
+      font-size: $font-size-base;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}
+
+.gfield_radio,
+.gfield_checkbox {
+  [class^='gchoice'] {
+    margin-top: $gfo-space-small * 0.5;
+    margin-bottom: $gfo-space-small * 0.5;
+  }
+}
+
+.gf_list_2col,
+.gf_list_3col,
+.gf_list_4col,
+.gf_list_5col {
+  ul {
+    display: flex;
+  }
+}
+
+.gf_list_2col {
+  li {
+    flex-basis: 50%;
+  }
+}
+
+.gf_list_3col {
+  li {
+    flex-basis: 33.33333%;
+  }
+}
+
+.gf_list_4col {
+  li {
+    flex-basis: 25%;
+  }
+}
+
+.gf_list_5col {
+  li {
+    flex-basis: 20%;
+  }
+}

@@ -1,0 +1,74 @@
+// ⊢ <input type="text">
+// ⊢ <input type="number">
+// ⊢ <input type="search">
+// ⊢ <input type="email">
+// ⊢ <input type="tel">
+// ⊢ <input type="url">
+// ⊢ <textarea>
+
+%gfo-input-box {
+  display: block;
+  min-height: $gfo-box-height;
+  width: 100%;
+  height: $gfo-box-height;
+  padding: $gfo-space-small $gfo-space-medium;
+  background: $gfo-box-background;
+  border: $gfo-box-border;
+  border-radius: $gfo-box-border-radius;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+    border-color: #52b7fe; // TODO: Color class
+  }
+
+  .gfield_error & {
+    background-color: $white; // TODO: Bootstrap color class
+    border-color: lighten($gfo-color-important, 17%);
+  }
+}
+
+%gfo-input-number-limit-width {
+  max-width: 64px;
+}
+
+%gfo-input-number-hide-spinner {
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+}
+
+// ⊢ Message to describe the form
+
+%gfo-hint-text {
+  display: block;
+  margin-top: $gfo-space-small * 0.5;
+  font-size: $gfo-hint-font-size;
+  color: $gfo-hint-color;
+
+  @include media-breakpoint-up(md) {
+    margin-top: $gfo-space-small;
+  }
+}
+
+// ⊢ <select>
+// ⊢− Replacing browser's default arrow
+
+%gfo-select-arrow {
+  position: relative;
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    top: $gfo-box-height * 0.5;
+    right: $gfo-select-arrow-right;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: $gfo-select-arrow-color;
+    border-width: $gfo-select-arrow-size;
+    pointer-events: none;
+    transform: translateY(-($gfo-select-arrow-size * 0.5));
+  }
+}

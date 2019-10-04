@@ -1,0 +1,140 @@
+@mixin gfo-column-input {
+  .ginput_container {
+    .small,
+    .medium,
+    .large {
+      width: 100%;
+
+      @include media-breakpoint-up(md) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.gform_wrapper {
+  background: $gfo-wrapper-bg;
+  border: $gfo-wrapper-border;
+  text-align: left;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -($gfo-space-column * 0.5);
+    margin-right: -($gfo-space-column * 0.5);
+    padding-left: 0;
+
+    li {
+      width: auto;
+      list-style-type: none;
+      margin: $gfo-space-row 0 0;
+      padding-left: $gfo-space-column * 0.5;
+      padding-right: $gfo-space-column * 0.5;
+
+      &:before {
+        content: none; // -rtx
+      }
+
+      &.gform_hidden {
+        margin: 0;
+      }
+    }
+  }
+
+  .gfield {
+    width: 100%;
+
+    .ginput_container {
+      position: relative;
+
+      .small {
+        // Medium width on mobile
+        width: $gfo-size-medium;
+        width: calc(#{$gfo-size-medium}- #{$gfo-space-column});
+
+        @include media-breakpoint-up(md) {
+          width: $gfo-size-small;
+          width: calc(#{$gfo-size-small} - #{$gfo-space-column} * 0.5);
+        }
+      }
+
+      .medium {
+        width: $gfo-size-full;
+
+        @include media-breakpoint-up(md) {
+          width: $gfo-size-medium;
+          width: calc(#{$gfo-size-medium} - #{$gfo-space-column} * 0.5);
+        }
+      }
+
+      .large {
+        width: $gfo-size-full;
+
+        @include media-breakpoint-up(md) {
+          width: $gfo-size-large;
+        }
+      }
+    }
+  }
+
+  .gf_left_half,
+  .gf_right_half {
+    @include gfo-column-input;
+
+    @include media-breakpoint-up(md) {
+      width: 50%;
+    }
+  }
+
+  .gf_left_third,
+  .gf_middle_third,
+  .gf_right_third {
+    @include gfo-column-input;
+
+    @include media-breakpoint-up(md) {
+      width: 33.33333%;
+    }
+  }
+
+  .gf_first_quarter,
+  .gf_second_quarter,
+  .gf_third_quarter,
+  .gf_fourth_quarter {
+    @include gfo-column-input;
+
+    @include media-breakpoint-up(md) {
+      width: 25%;
+    }
+  }
+
+  .gfield_error {
+    position: relative;
+    padding-top: $gfo-error-backdrop-padding;
+    padding-bottom: $gfo-error-backdrop-padding;
+
+    .gfield_label {
+      color: $gfo-error-label-color;
+    }
+
+    .validation_message {
+      display: block;
+      margin-top: $gfo-space-small;
+      font-size: $gfo-validation-font-size;
+      color: $gfo-color-important;
+    }
+
+    &:before {
+      content: ' ';
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: -($gfo-error-backdrop-bleed);
+      right: -($gfo-error-backdrop-bleed);
+      bottom: 0;
+      width: auto;
+      height: auto;
+      border-radius: $gfo-error-backdrop-radius;
+      background-color: $gfo-error-backdrop-color;
+    }
+  }
+}

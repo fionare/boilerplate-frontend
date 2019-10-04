@@ -1,0 +1,83 @@
+.gform_wrapper {
+  font-size: $gfo-font-size;
+  padding: $gfo-wrapper-padding-mobile;
+
+  @include media-breakpoint-up(lg) {
+    padding: $gfo-wrapper-padding;
+  }
+
+  .gform_title,
+  .gsection_title {
+    margin-top: 0;
+    font-size: $gfo-title-font-size;
+  }
+
+  .gform_fields {
+    padding: 0;
+  }
+
+  .gfield_label {
+    display: block;
+    position: relative;
+    margin: $gfo-space-small 0;
+    color: $gfo-label-color;
+    font-weight: $gfo-label-font-weight;
+    text-transform: $gfo-label-style;
+
+    @include media-breakpoint-up(md) {
+      margin-top: $gfo-space-medium;
+      font-size: $gfo-label-font-size;
+    }
+  }
+
+  .top_label .gfield_label {
+    margin-top: 0;
+
+    @include media-breakpoint-up(md) {
+      margin-top: 0;
+    }
+  }
+
+  .gfield_description {
+    position: relative;
+    font-size: $gfo-description-font-size;
+  }
+
+  .gfield_required {
+    color: $gfo-color-important;
+    padding-left: 2px;
+  }
+
+  .field_description_above {
+    .gfield_description {
+      margin-bottom: $gfo-space-small;
+
+      @include media-breakpoint-up(md) {
+        margin-bottom: $gfo-space-medium;
+      }
+    }
+  }
+
+  .gform_footer {
+    margin-top: $gfo-space-medium;
+
+    .gform_button {
+      @extend .btn;
+    }
+  }
+
+  // Scroll Wrapper (Useful for Privacy Policy, etc)
+  .gf_scroll_text {
+    @extend %gfo-input-box;
+    overflow: scroll;
+    height: 200px;
+    background: $white;
+    padding: $gfo-space-row $gfo-space-column;
+    margin-left: $gfo-space-column * 0.5;
+    margin-right: $gfo-space-column * 0.5;
+
+    @include media-breakpoint-up(md) {
+      height: 240px;
+    }
+  }
+}

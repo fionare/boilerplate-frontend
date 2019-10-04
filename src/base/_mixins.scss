@@ -1,0 +1,59 @@
+// Collection of common useful action
+
+/* Reset the style of ul or ol
+ * This will:
+ * - Remove the list style
+ * - Remove the paddings and margins
+ */
+
+@mixin resetListStyle {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+@mixin fontFamilySansSerif {
+  font-family: $font-family-sans-serif;
+
+  html:lang(ja) & {
+    font-family: $font-family-sans-serif-ja;
+  }
+}
+
+@mixin positionCover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@mixin fontFamilyDisplay {
+  font-family: $font-family-display;
+
+  html:lang(ja) & {
+    font-family: $font-family-display-ja;
+  }
+}
+
+// This should not be used as a solution
+// for every grid spacing problem.
+// --!! Use this in moderation !!--
+//
+// Example:
+// .row {
+//   @include colSpacer($spacer * .5);
+//   @include media-breakpoint-up(lg) {
+//     @include colSpacer($spacer * .75);
+//   }
+// }
+
+@mixin colSpacer($spacing: $spacer * 0.5) {
+  margin-left: -$spacing;
+  margin-right: -$spacing;
+
+  & > [class*='col'] {
+    padding-left: $spacing;
+    padding-right: $spacing;
+  }
+}

@@ -1,0 +1,47 @@
+.ginput_container {
+  input[type='text'] {
+    @extend %gfo-input-box;
+  }
+
+  textarea {
+    @extend %gfo-input-box;
+  }
+
+  input[type='number'] {
+    @extend %gfo-input-box;
+    @extend %gfo-input-number-hide-spinner;
+    @extend %gfo-input-number-limit-width;
+    -moz-appearance: textfield;
+  }
+
+  input[type='search'] {
+    @extend %gfo-input-box;
+  }
+
+  input[type='email'] {
+    @extend %gfo-input-box;
+  }
+
+  input[type='tel'] {
+    @extend %gfo-input-box;
+  }
+
+  input[type='url'] {
+    @extend %gfo-input-box;
+  }
+}
+
+.ginput_container_phone {
+  .gform_wrapper .gfield & {
+    .medium {
+      // Medium width on mobile
+      width: $gfo-size-medium;
+      width: calc(#{$gfo-size-medium}- #{$gfo-space-column});
+
+      @include media-breakpoint-up(md) {
+        width: $gfo-size-small;
+        width: calc(#{$gfo-size-small} - #{$gfo-space-column} * 0.5);
+      }
+    }
+  }
+}

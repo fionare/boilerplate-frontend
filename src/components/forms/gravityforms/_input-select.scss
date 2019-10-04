@@ -1,0 +1,42 @@
+.ginput_container {
+  select {
+    @extend %gfo-input-box;
+    position: relative;
+    appearance: none;
+    -moz-appearance: textfield;
+
+    // Remove firefox outline
+    .gf_browser_gecko &:focus,
+    .gf_browser_gecko &:active {
+      color: $body-color;
+      color: transparent;
+      text-shadow: 0 0 0 $body-color;
+    }
+  }
+
+  select[multiple] {
+    height: auto;
+    padding-top: $gfo-space-medium;
+    padding-bottom: $gfo-space-medium;
+
+    option {
+      & + option {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+.gf_left_half,
+.gf_right_half,
+.gf_left_third,
+.gf_middle_third,
+.gf_right_third,
+.gf_first_quarter,
+.gf_second_quarter,
+.gf_third_quarter,
+.gf_fourth_quarter {
+  .ginput_container_select {
+    @extend %gfo-select-arrow;
+  }
+}
