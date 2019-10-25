@@ -22,5 +22,6 @@ try {
 const tasks = [$.clean, parallel($.copy, $.styles, $.scripts), $.markups];
 
 !$.production && tasks.push($.watch, $.server);
+$.production && tasks.push($.themeinfo);
 
 exports.default = series(...tasks);
