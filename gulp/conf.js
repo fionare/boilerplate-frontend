@@ -18,8 +18,8 @@ const paths = {
     ignore: ['!dist/includes{,/jquery.min.js}', '!dist/assets']
   },
   html: {
-    entry: 'src/index.html',
-    import: ['src/pages', 'src/components'],
+    entry: 'src/pages/*.html',
+    import: ['src/', 'src/components'],
     all: 'src/**/*.html'
   },
   css: {

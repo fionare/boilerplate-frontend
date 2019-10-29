@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>{{ title }}</title>
+    <base href="http://localhost:3000/" target="_self">
     <!-- inject:css -->
     <!-- endinject -->
   </head>
 
   <body>
     <main>
-      {% include "front-page.html" %}
+      {% block main %}{% endblock %}
     </main>
 
     <!-- inject:js -->
