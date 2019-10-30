@@ -1,7 +1,5 @@
 'use strict';
 
-const production = process.env.NODE_ENV === 'production';
-
 const paths = {
   modules: {
     jquery: 'node_modules/jquery/dist/jquery.min.js',
@@ -40,7 +38,4 @@ const paths = {
   }
 };
 
-module.exports = {
-  production,
-  paths
-};
+module.exports = { paths };

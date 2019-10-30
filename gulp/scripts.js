@@ -1,13 +1,15 @@
 'use strict';
 
 const { src, dest } = require('gulp');
-const { paths, production } = require('./conf');
+const { paths } = require('./conf');
 
 const $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'rollup{,-*}']
 });
 
 const scripts = () => {
+  const production = process.env.NODE_ENV === 'production';
+
   const babelOptions = {
     presets: [['@babel/env']],
     exclude: 'node_modules/**'
@@ -47,4 +49,4 @@ const scripts = () => {
     .pipe($.touchCmd());
 };
 
-exports.scripts = scripts;
+module.exports = scripts;

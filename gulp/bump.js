@@ -1,7 +1,8 @@
 'use strict';
 
 const fs = require('fs-extra');
-const themeinfo = done => {
+
+const bump = done => {
   // load file
   let project = JSON.parse(fs.readFileSync('themeinfo.json'));
 
@@ -28,4 +29,4 @@ const themeinfo = done => {
   done();
 };
 
-exports.themeinfo = themeinfo;
+module.exports = bump;

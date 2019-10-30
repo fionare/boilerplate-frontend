@@ -1,6 +1,6 @@
 'use strict';
 
-const { src, dest, parallel } = require('gulp');
+const { src, dest } = require('gulp');
 const { paths } = require('./conf');
 
 const $ = require('gulp-load-plugins')();
@@ -15,4 +15,4 @@ const copy = done => {
   done();
 };
 
-exports.copy = copy;
+module.exports = copy;

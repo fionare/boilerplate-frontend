@@ -1,13 +1,15 @@
 'use strict';
 
 const { src, dest } = require('gulp');
-const { paths, production } = require('./conf');
+const { paths } = require('./conf');
 
 const $ = require('gulp-load-plugins')();
 
 $.sass.compiler = require('node-sass');
 
 const styles = () => {
+  const production = process.env.NODE_ENV === 'production';
+
   const sassOptions = {
     outputStyle: 'expanded',
     includePaths: 'node_modules'
@@ -50,4 +52,4 @@ const styles = () => {
     .pipe($.touchCmd());
 };
 
-exports.styles = styles;
+module.exports = styles;

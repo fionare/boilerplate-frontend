@@ -3,7 +3,7 @@
 const browserSync = require('browser-sync').create();
 const { paths } = require('./conf');
 
-const server = () => {
+const serve = () => {
   browserSync.init({
     server: {
       baseDir: paths.dist.dir
@@ -16,4 +16,4 @@ const server = () => {
   browserSync.watch(paths.dist.all).on('change', browserSync.reload);
 };
 
-exports.server = server;
+module.exports = serve;
