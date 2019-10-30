@@ -17,7 +17,7 @@ const paths = {
   },
   html: {
     entry: 'src/pages/*.html',
-    import: ['src/', 'src/components'],
+    import: ['src/', 'src/includes', 'src/components'],
     all: 'src/**/*.html'
   },
   css: {
