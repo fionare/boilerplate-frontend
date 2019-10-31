@@ -8,6 +8,7 @@ const { paths } = require('./conf');
 const $ = require('gulp-load-plugins')();
 
 let branch = "";
+let basePath = "";
 
 const markups = () => {
   const production = process.env.NODE_ENV === 'production';
@@ -30,7 +31,10 @@ const markups = () => {
 
   const fetchData = () => {
     const data = JSON.parse(fs.readFileSync(paths.json.entry));
-    return {basePath: data.basePath[branch]};
+    if(data.basePath[branch] && basePath === "") {
+      basePath = data.basePath[branch];
+    }
+    return {basePath: basePath};
   };
 
   production && (injectOptions.removeTags = true);
@@ -50,5 +54,10 @@ const setBranch = (branchName) => {
   branch = branchName;
 }
 
+const setBasePath = (newBasePath) => {
+  basePath = newBasePath;
+}
+
 module.exports.setBranch = setBranch;
+module.exports.setBasePath = setBasePath;
 module.exports.default = markups;

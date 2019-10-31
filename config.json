@@ -6,7 +6,6 @@
 		"uri": ""
 	},
 	"basePath" : {
-		"html/dev": "http://localhost:3000/",
 		"html/stable": ""
 	}
 }

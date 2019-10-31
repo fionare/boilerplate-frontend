@@ -3,7 +3,7 @@ const git = require("gulp-git");
 const chalk = require("chalk");
 const readlineSync = require("readline-sync");
 const { watch, serve, bump } = require("./index.js");
-const compile = require("./compile.js");
+const compile = require("./compile");
 
 let workingDirectoryModified = false;
 let branch = "";
