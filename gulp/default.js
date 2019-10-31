@@ -55,7 +55,7 @@ const checkBranches = done => {
 };
 
 const masterInput = done => {
-	git.exec({ args: "branch -a" }, function(err, stdout) {
+	git.exec({ args: "branch -l" }, function(err, stdout) {
 		let branches = [];
 		let options = [];
 		options.push("Run preview server");
