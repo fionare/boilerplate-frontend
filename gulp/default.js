@@ -96,8 +96,12 @@ const branchBuildActions = done => {
 			done();
 		} else {
 			git.exec({args : " log -1 --pretty=%B"}, (err, stdout) => {
-				console.log(stdout);
-				done();
+				if(stdout.substring(0,5) === "Build") {
+					console.log(chalk.inverse("[********]") + " * Previous commit is a build, refuse to re-build");
+					done();
+				} else {
+					runBuildMode(done);
+				}
 			});
 		}
 	} else {
