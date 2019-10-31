@@ -112,6 +112,7 @@ const branchBuildActions = done => {
 
 const runBuildMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running build mode");
+	process.env.NODE_ENV = 'production';
 	gulp.series(compile, bump, checkStatus, commitChanges)();
 	done();
 }
