@@ -94,7 +94,10 @@ const branchBuildActions = done => {
 			console.log(chalk.inverse("[********]") + " * html/stable branch shouldn't have modified files, please check the changes");
 			done();
 		} else {
-			runBuildMode(done);
+			git.exec({args : " log -1 --pretty=%B"}, (err, stdout) => {
+				console.log(stdout);
+				done();
+			});
 		}
 	} else {
 		console.log(chalk.inverse("[********]") + " * Running build on development branch...");
@@ -133,7 +136,7 @@ const branchDefaultActions = done => {
 	if (branch === "wp/dev") {
 		runPreviewMode(done);
 	} else if (branch === "html/stable") {
-		runBuildMode(done);
+		masterInput(done);
 	} else {
 		runDevelopmentMode(done);
 	}
@@ -156,15 +159,17 @@ const commitChanges = done => {
 		message = "Pre-build commit (" + branch + ")";
 	}
 
+	let date = (new Date()).toString().substring(0,24);
+
 	git.exec({args : " add *"}, () => {
 		if(gitRemoved.length > 0) {
 			git.exec({args : " rm " + gitRemoved.join(" ")}, () => {
-				git.exec({args : " commit -m '" + message + " on: "+ (new Date()) +"'"}, () => {
+				git.exec({args : " commit -m '" + message + " on: "+ date +"'"}, () => {
 					done();
 				});
 			});
 		} else {
-			git.exec({args : " commit -m '" + message + " on: "+ (new Date()) +"'"}, () => {
+			git.exec({args : " commit -m '" + message + " on: "+ date +"'"}, () => {
 				done();
 			});
 		}

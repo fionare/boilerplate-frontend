@@ -20,19 +20,28 @@ const paths = {
     import: ['src/', 'src/includes', 'src/components'],
     all: 'src/**/*.html'
   },
+  json: {
+    all: 'src/**/*.json'
+  },
   css: {
     entry: 'src/styles.scss',
     import: [
+      'src/includes/**/*.scss',
       'src/components/**/*.scss',
       '!src/**/_*.scss',
-      '!src/base/styles.scss'
+      '!src/styles.scss'
     ],
     all: 'src/**/*.scss',
     static: 'dist/**/*.css'
   },
   js: {
     entry: 'src/script.js',
-    import: ['src/components/**/*.js', '!src/**/_*.js', '!src/base/index.js'],
+    import: [
+      'src/includes/**/*.js',
+      'src/components/**/*.js',
+      '!src/**/_*.js',
+      '!src/scripts.js'
+    ],
     all: 'src/**/*.js',
     static: 'dist/**/*.js'
   }
