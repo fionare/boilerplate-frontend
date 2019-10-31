@@ -66,6 +66,11 @@ const masterInput = done => {
 				branches.push(entry.trim());
 			}
 		});
+		console.log(chalk.inverse("[********]") + " * Welcome to master branch, please work on your designated branch");
+		console.log(chalk.inverse("[********]") + " - html/dev for html development");
+		console.log(chalk.inverse("[********]") + " - html/stable for html builds");
+		console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
+		console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
 		let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
 		if (index > 0) {
 			branch = branches[index - 1];
