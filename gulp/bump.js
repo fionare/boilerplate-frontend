@@ -4,10 +4,10 @@ const fs = require('fs-extra');
 
 const bump = done => {
   // load file
-  let project = JSON.parse(fs.readFileSync('themeinfo.json'));
+  let project = JSON.parse(fs.readFileSync('config.json'));
 
   // check file modified time
-  let stat = fs.statSync('themeinfo.json');
+  let stat = fs.statSync('config.json');
 
   // build version
   let version = Math.round(

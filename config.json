@@ -1,0 +1,11 @@
+{
+	"themeinfo":	{
+		"name": "Project Template",
+		"description": "Project Template",
+		"author": "Custom Media",
+		"uri": ""
+	},
+	"basePath" : {
+		"html/stable": ""
+	}
+}

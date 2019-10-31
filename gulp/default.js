@@ -2,7 +2,8 @@ const gulp = require("gulp");
 const git = require("gulp-git");
 const chalk = require("chalk");
 const readlineSync = require("readline-sync");
-const { compile, watch, serve, bump } = require("./index.js");
+const { watch, serve, bump } = require("./index.js");
+const compile = require("./compile");
 
 let workingDirectoryModified = false;
 let branch = "";
@@ -54,7 +55,7 @@ const checkBranches = done => {
 };
 
 const masterInput = done => {
-	git.exec({ args: "branch -a" }, function(err, stdout) {
+	git.exec({ args: "branch -l" }, function(err, stdout) {
 		let branches = [];
 		let options = [];
 		options.push("Run preview server");
@@ -65,6 +66,11 @@ const masterInput = done => {
 				branches.push(entry.trim());
 			}
 		});
+		console.log(chalk.inverse("[********]") + " * Welcome to master branch, please work on your designated branch");
+		console.log(chalk.inverse("[********]") + " - html/dev for html development");
+		console.log(chalk.inverse("[********]") + " - html/stable for html builds");
+		console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
+		console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
 		let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
 		if (index > 0) {
 			branch = branches[index - 1];
@@ -95,8 +101,12 @@ const branchBuildActions = done => {
 			done();
 		} else {
 			git.exec({args : " log -1 --pretty=%B"}, (err, stdout) => {
-				console.log(stdout);
-				done();
+				if(stdout.substring(0,5) === "Build") {
+					console.log(chalk.inverse("[********]") + " * Previous commit is a build, refuse to re-build");
+					done();
+				} else {
+					runBuildMode(done);
+				}
 			});
 		}
 	} else {
@@ -116,7 +126,8 @@ const branchBuildActions = done => {
 const runBuildMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running build mode");
 	process.env.NODE_ENV = 'production';
-	gulp.series(compile, bump, checkStatus, commitChanges)();
+	compile.setBranch(branch);
+	gulp.series(compile.run, bump, checkStatus, commitChanges)();
 	done();
 }
 
@@ -128,7 +139,8 @@ const runPreviewMode = done => {
 
 const runDevelopmentMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running development mode");
-	gulp.series(compile, watch, serve)();
+	compile.setBranch(branch);
+	gulp.series(compile.run, watch, serve)();
 	done();
 }
 
