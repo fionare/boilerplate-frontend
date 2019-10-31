@@ -35,7 +35,8 @@ const scripts = () => {
       return `import ${fileName} from '../../${filePath}';`;
     },
     starttag: '// inject:imports',
-    endtag: '// endinject'
+    endtag: '// endinject',
+    quiet: true
   };
 
   return src(paths.js.entry)

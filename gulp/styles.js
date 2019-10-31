@@ -36,7 +36,8 @@ const styles = () => {
     transform: filePath => `@import '${filePath}';`,
     starttag: '// inject:imports',
     endtag: '// endinject',
-    addRootSlash: false
+    addRootSlash: false,
+    quiet: true
   };
 
   return src(paths.css.entry)
