@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs-extra');
+const path = require('path');
 const { src, dest } = require('gulp');
 const { paths } = require('./conf');
 
@@ -24,8 +26,9 @@ const markups = () => {
     max_preserve_newlines: 0
   };
 
-  const fetchData = {
-    basePath: 'http://localhost:3000/'
+  const fetchData = () => {
+    const data = JSON.parse(fs.readFileSync(paths.json.entry));
+    return production ? data.stable : data.dev;
   };
 
   production && (injectOptions.removeTags = true);

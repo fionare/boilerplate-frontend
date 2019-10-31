@@ -20,9 +20,6 @@ const paths = {
     import: ['src/', 'src/includes', 'src/components'],
     all: 'src/**/*.html'
   },
-  json: {
-    all: 'src/**/*.json'
-  },
   css: {
     entry: 'src/styles.scss',
     import: [
@@ -44,6 +41,9 @@ const paths = {
     ],
     all: 'src/**/*.js',
     static: 'dist/**/*.js'
+  },
+  json: {
+    entry: 'src/data.json'
   }
 };
 
