@@ -159,7 +159,7 @@ const commitChanges = done => {
 		message = "Pre-build commit (" + branch + ")";
 	}
 
-	let date = (new Date()).toString().substring(0,24);
+	const date = (new Date()).toString().substring(0,24);
 
 	git.exec({args : " add *"}, () => {
 		if(gitRemoved.length > 0) {

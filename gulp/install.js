@@ -9,8 +9,8 @@ const fs = require('fs-extra');
 const init = done => {
 	console.log(chalk.inverse("[********]") + " * Initializing repository");
 	git.init({args: "--quiet"}, function (err) {
-    done();
-  });
+		done();
+	});
 };
 
 const add = () => {
@@ -21,7 +21,7 @@ const add = () => {
 
 const commit = () => {
 	console.log(chalk.inverse("[********]") + " * Creating initial commit");
-	const date = new Date();
+	const date = (new Date()).toString().substring(0,24);
 	return gulp.src(["./*", ".gitignore", "!node_modules"])
 	.pipe(git.commit('Initial Commit: ' + date, {
 		disableAppendPaths: true,
@@ -35,10 +35,20 @@ const setup = done => {
 	git.branch("wp/dev");
 	git.checkout('html/dev', {args:'-b'});
 
-	let remote = readlineSync.question(chalk.inverse("[********]") + " > Enter GitHub repository address: ");
-	git.addRemote("origin", remote);
-
-	done();
+	let remote = readlineSync.question(chalk.inverse("[********]") + " > Enter GitHub repository SSH/HTTPS: ");
+	if(remote) {
+		git.addRemote("origin", remote, () => {
+			if (readlineSync.keyInYN(chalk.inverse("[********]") + " > Do you want to push everything to origin?")) {
+				git.exec({args: " push origin --all"}, () => {
+					done();
+				});
+			}　else {
+				done();
+			}
+		});
+	} else {
+		done();
+	}
 }
 
 if (fs.existsSync('.git')) {
