@@ -2,7 +2,8 @@ const gulp = require("gulp");
 const git = require("gulp-git");
 const chalk = require("chalk");
 const readlineSync = require("readline-sync");
-const { compile, watch, serve, bump } = require("./index.js");
+const { watch, serve, bump } = require("./index.js");
+const compile = require("./compile.js");
 
 let workingDirectoryModified = false;
 let branch = "";
@@ -116,7 +117,8 @@ const branchBuildActions = done => {
 const runBuildMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running build mode");
 	process.env.NODE_ENV = 'production';
-	gulp.series(compile, bump, checkStatus, commitChanges)();
+	compile.setBranch(branch);
+	gulp.series(compile.run, bump, checkStatus, commitChanges)();
 	done();
 }
 
@@ -128,7 +130,8 @@ const runPreviewMode = done => {
 
 const runDevelopmentMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running development mode");
-	gulp.series(compile, watch, serve)();
+	compile.setBranch(branch);
+	gulp.series(compile.run, watch, serve)();
 	done();
 }
 

@@ -1,5 +1,0 @@
-{
-  "dev": { "basePath": "http://localhost:3000/" },
-  "stable": { "basePath": "" }
-}
-

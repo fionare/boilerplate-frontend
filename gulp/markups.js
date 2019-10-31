@@ -7,6 +7,8 @@ const { paths } = require('./conf');
 
 const $ = require('gulp-load-plugins')();
 
+let branch = "";
+
 const markups = () => {
   const production = process.env.NODE_ENV === 'production';
 
@@ -28,7 +30,7 @@ const markups = () => {
 
   const fetchData = () => {
     const data = JSON.parse(fs.readFileSync(paths.json.entry));
-    return production ? data.stable : data.dev;
+    return {basePath: data.basePath[branch]};
   };
 
   production && (injectOptions.removeTags = true);
@@ -44,4 +46,9 @@ const markups = () => {
     .pipe($.touchCmd());
 };
 
-module.exports = markups;
+const setBranch = (branchName) => {
+  branch = branchName;
+}
+
+module.exports.setBranch = setBranch;
+module.exports.default = markups;

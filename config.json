@@ -1,0 +1,12 @@
+{
+	"themeinfo":	{
+		"name": "Project Template",
+		"description": "Project Template",
+		"author": "Custom Media",
+		"uri": ""
+	},
+	"basePath" : {
+		"html/dev": "http://localhost:3000/",
+		"html/stable": ""
+	}
+}
