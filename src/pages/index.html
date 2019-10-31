@@ -1,4 +1,9 @@
 {% set title = "Document" %}
 {% extends "layout.html" %}
+
 {% block main %}
+<section>
+  {% set name = "world" %}
+  {% include "content/content.html" %}
+</section>
 {% endblock %}
