@@ -1,8 +1,7 @@
-'use strict';
+"use strict";
 
-const { series, parallel } = require('gulp');
-const { compile, watch, serve, bump } = require('./gulp');
+const runner = require("./gulp/default.js");
 
-process.argv.indexOf('-c') > 0 && (process.env.NODE_ENV = 'production');
-exports.default = series(compile, watch, serve);
-exports.build = series(compile, bump);
+exports.default = runner.default;
+exports.build = runner.build;
+exports.install = require("./gulp/install.js").default;
