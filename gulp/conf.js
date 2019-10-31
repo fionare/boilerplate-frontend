@@ -13,7 +13,7 @@ const paths = {
     all: 'dist/**/*',
     assets: 'dist/assets',
     include: 'dist/includes',
-    ignore: ['!dist/includes{,/jquery.min.js}', '!dist/assets']
+    ignore: ['!dist/includes{,/jquery.min.js}', '!dist/assets', '!dist/images']
   },
   html: {
     entry: 'src/pages/*.html',
