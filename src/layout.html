@@ -11,10 +11,11 @@
   </head>
 
   <body>
+    {% include "header/header.html" %}
     <main>
       {% block main %}{% endblock %}
     </main>
-
+    {% include "footer/footer.html" %}
     <!-- inject:js -->
     <!-- endinject -->
   </body>
