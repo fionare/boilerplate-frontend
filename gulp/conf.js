@@ -43,7 +43,11 @@ const paths = {
     static: 'dist/**/*.js'
   },
   json: {
-    entry: 'config.json'
+    data: {
+      dir: "src/data",
+      files: "src/data/*.json"
+    },
+    config: 'config.json'
   }
 };
 

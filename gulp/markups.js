@@ -16,7 +16,7 @@ const markups = () => {
   const nunjucksOptions = { path: paths.html.import };
   const injectStyles = src(paths.css.static, { read: false });
   const injectScripts = src(paths.js.static, { read: false });
-  const injectOptions = { ignorePath: paths.dist.dir, addRootSlash: false };
+  const injectOptions = { ignorePath: paths.dist.dir, addRootSlash: false, quiet: true };
 
   const renameOptions = file => {
     if (file.basename == 'index') return;
@@ -30,11 +30,28 @@ const markups = () => {
   };
 
   const fetchData = () => {
-    const data = JSON.parse(fs.readFileSync(paths.json.entry));
+    const data = JSON.parse(fs.readFileSync(paths.json.config));
     if(data.basePath[branch] && basePath === "") {
       basePath = data.basePath[branch];
     }
-    return {basePath: basePath};
+
+    let output = {};
+    output.basePath = basePath;
+
+    let jsonFiles = fs.readdirSync(paths.json.data.dir);
+    if(jsonFiles.length > 0) {
+      jsonFiles.forEach(filename => {
+        // get current file name
+        const name = path.parse(filename).name;
+        // get current file extension
+        const ext = path.parse(filename).ext;
+        // get current file path
+        const filepath = path.resolve(paths.json.data.dir, filename);
+
+        output[name] = JSON.parse(fs.readFileSync(filepath));
+      });
+    }
+    return output;
   };
 
   production && (injectOptions.removeTags = true);
