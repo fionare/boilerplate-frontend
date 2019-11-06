@@ -62,7 +62,7 @@ const markups = () => {
     .pipe($.rename(renameOptions))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
-    .pipe(production ? $.prettyHtml(prettyOptions) : $.noop())
+    .pipe($.prettyHtml(prettyOptions))
     .pipe(dest(paths.dist.dir))
     .pipe($.touchCmd());
 };
