@@ -44,7 +44,7 @@ const styles = () => {
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(!production ? $.sourcemaps.init() : $.noop())
     .pipe($.sass(sassOptions).on('error', $.sass.logError))
-    .pipe(production ? $.combineMq() : $.noop())
+    .pipe($.combineMq())
     .pipe($.autoprefixer(prefixerOptions))
     .pipe(!production ? $.sourcemaps.write('.') : $.noop())
     .pipe(production ? $.cleanCss() : $.noop())
