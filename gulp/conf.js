@@ -16,7 +16,7 @@ const paths = {
     ignore: ['!dist/includes{,/jquery.min.js}', '!dist/assets', '!dist/images']
   },
   html: {
-    entry: 'src/pages/*.html',
+    entry: ['src/pages/*.html', 'src/pages/tmp/*.html'],
     import: ['src/', 'src/includes', 'src/components'],
     all: 'src/**/*.html'
   },
@@ -44,8 +44,13 @@ const paths = {
   },
   json: {
     data: {
-      dir: "src/data",
-      files: "src/data/*.json"
+      dir: 'src/data',
+      files: 'src/data/*.json'
+    },
+    tmp: {
+      dir: 'src/pages/tmp/',
+      file: 'src/pages.json',
+      templates: 'src/*.njk'
     },
     config: 'config.json'
   }
