@@ -1,13 +1,14 @@
 'use strict';
 
 const fs = require('fs-extra');
+const { paths } = require('./conf');
 
 const bump = done => {
   // load file
-  let project = JSON.parse(fs.readFileSync('config.json'));
+  let project = JSON.parse(fs.readFileSync(paths.json.config)).themeinfo;
 
   // check file modified time
-  let stat = fs.statSync('config.json');
+  let stat = fs.statSync(paths.json.config);
 
   // build version
   let version = Math.round(
