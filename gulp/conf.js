@@ -32,7 +32,7 @@ const paths = {
     static: 'dist/**/*.css'
   },
   js: {
-    entry: 'src/script.js',
+    entry: 'src/scripts.js',
     import: [
       'src/includes/**/*.js',
       'src/components/**/*.js',
