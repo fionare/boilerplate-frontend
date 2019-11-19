@@ -11,11 +11,6 @@ let state = "default";
 let gitStatus = "";
 let gitRemoved = [];
 
-const setBuild = done => {
-	state = "build";
-	done();
-};
-
 const checkStatus = done => {
 	git.status({ args: "--porcelain" }, function(err, stdout) {
 		if (stdout) {
@@ -32,33 +27,77 @@ const checkBranches = done => {
 	git.revParse({ args: "--abbrev-ref HEAD" }, function(err, currentBranch) {
 		branch = currentBranch;
 		if (branch === "master") {
-			if (state === "default") {
-				if (workingDirectoryModified) {
-					console.log(chalk.inverse("[********]") + " * Master branch shouldn't have modified files, please check the changes");
-				} else {
-					masterInput(done);
-				}
-			}
-			if (state === "build") {
-				console.log(chalk.inverse("[********]") + " * Build is not allowed to run on master");
+			if (workingDirectoryModified) {
+				console.log(chalk.inverse("[********]") + " * Master branch shouldn't have modified files, please check the changes");
+			} else {
+				console.log(chalk.inverse("[********]") + " * Welcome to master branch, please work on your designated branch");
+				console.log(chalk.inverse("[********]") + " - html/dev for html development");
+				console.log(chalk.inverse("[********]") + " - html/stable for html builds");
+				console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
+				console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
+				branchSwitcher(done);
 			}
 		} else {
-			if (state === "default") {
-				branchDefaultActions(done);
-			}
-			if (state === "build") {
-				branchBuildActions(done);
-			}
+			runOptions(done);
 		}
 		done();
 	});
 };
 
-const masterInput = done => {
+const runOptions = done => {
+	let options = [];
+	let actions = [];
+	
+	switch(branch) {
+		case "master":
+		options.push("Switch branch");
+		actions.push("switch");
+		break;
+		case "html/stable":
+		options.push("Build");
+		actions.push("build");
+		case "wp/dev":
+		options.push("Run preview server");
+		actions.push("preview");
+		options.push("Switch branch");
+		actions.push("switch");
+		break;
+		default:
+		options.push("Run development server");
+		actions.push("dev");
+		options.push("Build");
+		actions.push("build");
+		options.push("Switch branch");
+		actions.push("switch");
+		break;
+	}
+
+	let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
+
+	if(index > -1) {
+		switch(actions[index]) {
+			case "build":
+				branchBuildActions(done);
+			break;
+			case "dev":
+				runDevelopmentMode(done);
+			break;
+			case "preview":
+				runPreviewMode(done);
+			break;
+			case "switch":
+				branchSwitcher(done);
+			break;
+		}
+	} else {
+		done();
+	}
+};
+
+const branchSwitcher = done => {
 	git.exec({ args: "branch -l" }, function(err, stdout) {
 		let branches = [];
 		let options = [];
-		options.push("Run preview server");
 		stdout = stdout.split("\n");
 		stdout.forEach(entry => {
 			if (entry.indexOf("*") !== 0 && entry !== "") {
@@ -66,26 +105,13 @@ const masterInput = done => {
 				branches.push(entry.trim());
 			}
 		});
-		console.log(chalk.inverse("[********]") + " * Welcome to master branch, please work on your designated branch");
-		console.log(chalk.inverse("[********]") + " - html/dev for html development");
-		console.log(chalk.inverse("[********]") + " - html/stable for html builds");
-		console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
-		console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
+
 		let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
-		if (index > 0) {
-			branch = branches[index - 1];
+		if (index > -1) {
+			branch = branches[index];
 			git.checkout(branch, function(err) {
-				if (state === "default") {
-					branchDefaultActions(done);
-				}
-				if (state === "build") {
-					branchBuildActions(done);
-				}
-				done();
+				runOptions(done);
 			});
-		} else if (index === 0) {
-			runPreviewMode(done);
-			done();
 		} else {
 			done();
 		}
@@ -93,17 +119,15 @@ const masterInput = done => {
 };
 
 const branchBuildActions = done => {
-	if (branch === "wp/dev") {
-		console.log(chalk.inverse("[********]") + " * Build is not allowed to run on wp/dev");
-	} else if (branch === "html/stable") {
+	if (branch === "html/stable") {
 		if (workingDirectoryModified) {
 			console.log(chalk.inverse("[********]") + " * html/stable branch shouldn't have modified files, please check the changes");
-			done();
+			runOptions(done);
 		} else {
 			git.exec({args : " log -1 --pretty=%B"}, (err, stdout) => {
 				if(stdout.substring(0,5) === "Build") {
 					console.log(chalk.inverse("[********]") + " * Previous commit is a build, refuse to re-build");
-					done();
+					runOptions(done);
 				} else {
 					runBuildMode(done);
 				}
@@ -127,12 +151,13 @@ const runBuildMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running build mode");
 	process.env.NODE_ENV = 'production';
 	compile.setBranch(branch);
-	gulp.series(compile.run, bump, checkStatus, commitChanges)();
+	gulp.series(compile.run, bump, checkStatus, commitChanges, checkStatus, runOptions)();
 	done();
 }
 
 const runPreviewMode = done => {
 	console.log(chalk.inverse("[********]") + " * Running preview mode");
+	console.log(chalk.inverse("[********]") + " * You might want to undo changes after finishing");
 	gulp.series(serve)();
 	done();
 }
@@ -148,7 +173,7 @@ const branchDefaultActions = done => {
 	if (branch === "wp/dev") {
 		runPreviewMode(done);
 	} else if (branch === "html/stable") {
-		masterInput(done);
+		branchSwitcher(done);
 	} else {
 		runDevelopmentMode(done);
 	}
@@ -198,4 +223,3 @@ const checkoutStableAndMerge = done => {
 };
 
 exports.default = gulp.series(checkStatus, checkBranches);
-exports.build = gulp.series(setBuild, checkStatus, checkBranches);

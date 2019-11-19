@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "gulp",
-    "postinstall": "gulp install"
+    "start": "gulp --silent",
+    "postinstall": "gulp install --silent"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
