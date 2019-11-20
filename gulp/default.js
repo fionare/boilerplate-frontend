@@ -11,23 +11,34 @@ let state = "default";
 let gitStatus = "";
 let gitRemoved = [];
 
+// checks working directory status
+// entry point when running gulp
 const checkStatus = done => {
 	git.status({ args: "--porcelain" }, function(err, stdout) {
 		if (stdout) {
+			// set status
 			workingDirectoryModified = true;
+			// dump output to be processed later
 			gitStatus = stdout;
 		} else {
+			// set status
 			workingDirectoryModified = false;
 		}
 		done();
 	});
 };
 
+// checks current active branch
+// entry point when running gulp
 const checkBranches = done => {
 	git.revParse({ args: "--abbrev-ref HEAD" }, function(err, currentBranch) {
+		// set branch name as current branch
 		branch = currentBranch;
 		if (branch === "master") {
+			// branch is master
 			if (workingDirectoryModified) {
+				// master should only have merges
+				// if there are any configuration updates or framework updates, make sure it's committed before running gulp
 				console.log(chalk.inverse("[********]") + " * Master branch shouldn't have modified files, please check the changes");
 			} else {
 				console.log(chalk.inverse("[********]") + " * Welcome to master branch, please work on your designated branch");
@@ -47,6 +58,8 @@ const checkBranches = done => {
 const runOptions = done => {
 	let options = [];
 	let actions = [];
+
+	process.env.NODE_ENV = 'default';
 	
 	switch(branch) {
 		case "master":
@@ -54,7 +67,9 @@ const runOptions = done => {
 		actions.push("switch");
 		break;
 		case "html/stable":
-		options.push("Build");
+		options.push("Test build");
+		actions.push("buildtest");
+		options.push("Build and commit");
 		actions.push("build");
 		case "wp/dev":
 		options.push("Run preview server");
@@ -65,7 +80,9 @@ const runOptions = done => {
 		default:
 		options.push("Run development server");
 		actions.push("dev");
-		options.push("Build");
+		options.push("Test build");
+		actions.push("buildtest");
+		options.push("Build to stable");
 		actions.push("build");
 		options.push("Switch branch");
 		actions.push("switch");
@@ -76,17 +93,20 @@ const runOptions = done => {
 
 	if(index > -1) {
 		switch(actions[index]) {
+			case "buildtest":
+			runTestBuildMode(done);
+			break;
 			case "build":
-				branchBuildActions(done);
+			branchBuildActions(done);
 			break;
 			case "dev":
-				runDevelopmentMode(done);
+			runDevelopmentMode(done);
 			break;
 			case "preview":
-				runPreviewMode(done);
+			runPreviewMode(done);
 			break;
 			case "switch":
-				branchSwitcher(done);
+			branchSwitcher(done);
 			break;
 		}
 	} else {
@@ -108,8 +128,12 @@ const branchSwitcher = done => {
 
 		let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
 		if (index > -1) {
-			branch = branches[index];
-			git.checkout(branch, function(err) {
+			git.checkout(branches[index], function(err) {
+				if(err) {
+					console.log(chalk.inverse("[********]") + " * Branch switching failed");
+				} else {
+					branch = branches[index];
+				}
 				runOptions(done);
 			});
 		} else {
@@ -145,6 +169,17 @@ const branchBuildActions = done => {
 			}
 		}
 	}
+};
+
+const runTestBuildMode = done => {
+	console.log(chalk.inverse("[********]") + " * Running test build mode");
+	process.env.NODE_ENV = 'production';
+	compile.setBranch(branch);
+	gulp.series(compile.run, bump, done => {
+		console.log(chalk.inverse("[********]") + " * Test build completed");
+		done();
+	}, runOptions)();
+	done();
 };
 
 const runBuildMode = done => {
