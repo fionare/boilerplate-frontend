@@ -45,6 +45,10 @@ const markups = () => {
 		let output = {};
 		output.basePath = basePath;
 
+    const filename = file.basename.split('.')[0];
+    filename !== 'index' &&
+      (output.canonicalUrl = filename.split('_').join('/'));
+
 		let jsonFiles = fs
 		.readdirSync(paths.json.data.dir)
 		.filter(files => /\.(json)$/.test(files));
