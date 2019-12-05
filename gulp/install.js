@@ -39,7 +39,7 @@ const setup = done => {
 	if(remote) {
 		git.addRemote("origin", remote, () => {
 			if (readlineSync.keyInYN(chalk.inverse("[********]") + " > Do you want to push everything to origin?")) {
-				git.exec({args: " push origin --all"}, () => {
+				git.exec({args: "push -u origin --all"}, () => {
 					done();
 				});
 			}　else {
