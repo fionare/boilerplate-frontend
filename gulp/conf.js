@@ -13,7 +13,7 @@ const paths = {
     all: 'dist/**/*',
     assets: 'dist/assets',
     include: 'dist/includes',
-    ignore: ['!dist/includes{,/jquery.min.js}', '!dist/assets', '!dist/images']
+    ignore: ['dist/includes/**', '!dist/includes', '!dist/includes/lib', '!dist/assets', '!dist/images', '!dist/files']
   },
   html: {
     entry: ['src/pages/*.html', 'src/pages/tmp/*.html'],
@@ -29,7 +29,7 @@ const paths = {
       '!src/styles.scss'
     ],
     all: 'src/**/*.scss',
-    static: 'dist/**/*.css'
+    static: ['dist/**/*.css', '!dist/**/_*.css']
   },
   js: {
     entry: 'src/scripts.js',
@@ -40,7 +40,7 @@ const paths = {
       '!src/scripts.js'
     ],
     all: 'src/**/*.js',
-    static: 'dist/**/*.js'
+    static: ['dist/**/*.js', '!dist/**/_*.js']
   },
   json: {
     data: {
