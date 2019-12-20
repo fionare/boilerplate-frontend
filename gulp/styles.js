@@ -3,7 +3,9 @@
 const { src, dest } = require('gulp');
 const { paths } = require('./conf');
 
-const $ = require('gulp-load-plugins')();
+const $ = require('gulp-load-plugins')({
+  pattern: ['gulp-*', 'auto*', '*css*']
+});
 
 $.sass.compiler = require('node-sass');
 
@@ -30,6 +32,13 @@ const styles = () => {
     ]
   };
 
+  const postcssOptions = [
+    $.autoprefixer(prefixerOptions),
+    $.postcssSortMediaQueries()
+  ];
+
+  production && postcssOptions.push($.cssnano());
+
   const injectFiles = src(paths.css.import, { read: false });
 
   const injectOptions = {
@@ -44,10 +53,8 @@ const styles = () => {
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(!production ? $.sourcemaps.init() : $.noop())
     .pipe($.sass(sassOptions).on('error', $.sass.logError))
-    .pipe($.combineMq())
-    .pipe($.autoprefixer(prefixerOptions))
+    .pipe($.postcss(postcssOptions))
     .pipe(!production ? $.sourcemaps.write('.') : $.noop())
-    .pipe(production ? $.cleanCss() : $.noop())
     .pipe(production ? $.rename('styles.min.css') : $.noop())
     .pipe(dest(paths.dist.include))
     .pipe($.touchCmd());
