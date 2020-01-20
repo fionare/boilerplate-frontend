@@ -32,7 +32,7 @@ const scripts = () => {
         path.lastIndexOf('/') + 1,
         path.lastIndexOf('.')
       );
-      return `import ${fileName} from '../../${filePath}';`;
+      return `import ${fileName} from '../..${filePath}';`;
     },
     starttag: '// inject:imports',
     endtag: '// endinject',
