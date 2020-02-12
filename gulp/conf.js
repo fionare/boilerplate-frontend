@@ -17,14 +17,14 @@ const paths = {
   },
   html: {
     entry: ['src/pages/*.html', 'src/pages/tmp/*.html'],
-    import: ['src/', 'src/includes', 'src/components'],
+    import: ['src/', 'src/includes', 'src/blocks'],
     all: 'src/**/*.html'
   },
   css: {
     entry: 'src/styles.scss',
     import: [
       'src/includes/**/*.scss',
-      'src/components/**/*.scss',
+      'src/blocks/**/*.scss',
       '!src/**/_*.scss',
       '!src/styles.scss'
     ],
@@ -35,7 +35,7 @@ const paths = {
     entry: 'src/scripts.js',
     import: [
       'src/includes/**/*.js',
-      'src/components/**/*.js',
+      'src/blocks/**/*.js',
       '!src/**/_*.js',
       '!src/scripts.js'
     ],
