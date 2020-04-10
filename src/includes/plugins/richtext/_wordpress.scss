@@ -1,5 +1,6 @@
-  // WP Gallery
   .rtf {
+
+    // WP Gallery
     .wp-block-image {
       @include media-breakpoint-up(md) {
         margin-top: $rtf-media-space * .75;
@@ -43,6 +44,7 @@
       }
     }
 
+    // WP Block Group
     .wp-block-group {
       $horizontal-space: $rtf-media-space * .5;
       margin-left: -$horizontal-space;
@@ -60,14 +62,6 @@
 
       @include media-breakpoint-up(lg) {
         $horizontal-space: $rtf-media-space;
-        margin-left: -$horizontal-space;
-        margin-right: -$horizontal-space;
-        padding-left: $horizontal-space;
-        padding-right: $horizontal-space;
-      }
-
-      @include media-breakpoint-up(xxl) {
-        $horizontal-space: $rtf-media-space * 1.5;
         margin-left: -$horizontal-space;
         margin-right: -$horizontal-space;
         padding-left: $horizontal-space;
