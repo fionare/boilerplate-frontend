@@ -1,13 +1,20 @@
-@import 'base/_variables';
-@import 'base/_mixins';
-@import 'base/_fonts';
-@import 'base/_global';
-
-// Helpful components
-@import 'base/components/_cover';
+@import 'base/variables';
+@import 'base/mixins';
+@import 'base/fonts';
+@import 'base/global';
 
 // Development components
-@import 'base/components/_guide';
+// Are safe to disable
+@import 'base/components/guide';
+
+// General components
+// Are useful in most occasion
+@import 'base/components/cover';
+
+// Plugin components
+// Depends on the project
+@import 'includes/plugins/richtext/richtext';
+@import 'includes/plugins/richtext/wordpress';
 
 // inject:imports
 // endinject
