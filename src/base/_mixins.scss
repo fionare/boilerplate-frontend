@@ -1,22 +1,17 @@
 // Collection of common useful action
 
-/* Reset the style of ul or ol
- * This will:
- * - Remove the list style
- * - Remove the paddings and margins
- */
+// Useful mixins from Bootstrap:
+// @mixin list-unstyled
+// @mixin clearfix
+// @mixin text-truncate
 
-@mixin resetListStyle {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0;
-}
+@mixin colSpacer($spacing: $spacer * 0.5) {
+  margin-left: -$spacing;
+  margin-right: -$spacing;
 
-@mixin fontFamilySansSerif {
-  font-family: $font-family-sans-serif;
-
-  html:lang(ja) & {
-    font-family: $font-family-sans-serif-ja;
+  & > [class*='col'] {
+    padding-left: $spacing;
+    padding-right: $spacing;
   }
 }
 
@@ -28,32 +23,23 @@
   left: 0;
 }
 
-@mixin fontFamilyDisplay {
-  font-family: $font-family-display;
+// Override styles for CJK
+@mixin cjk($lang: "all", $root: false) {
+  $el: ();
 
-  html:lang(ja) & {
-    font-family: $font-family-display-ja;
+  @if $enable-lang-ja and ($lang == "ja" or $lang == "all") {
+    $el: if(length($el) > 0, append($el, if($root != true, ":lang(ja) &", "&:lang(ja)"), "comma"), if($root != true, ":lang(ja) &", "&:lang(ja)"));
   }
-}
 
-// This should not be used as a solution
-// for every grid spacing problem.
-// --!! Use this in moderation !!--
-//
-// Example:
-// .row {
-//   @include colSpacer($spacer * .5);
-//   @include media-breakpoint-up(lg) {
-//     @include colSpacer($spacer * .75);
-//   }
-// }
+  @if $enable-lang-zh and ($lang == "zh" or $lang == "all") {
+    $el: if(length($el) > 0, append($el, if($root != true, ":lang(zh) &", "&:lang(zh)"), "comma"), if($root != true, ":lang(zh) &", "&:lang(zh)"));
+  }
 
-@mixin colSpacer($spacing: $spacer * 0.5) {
-  margin-left: -$spacing;
-  margin-right: -$spacing;
+  @if $enable-lang-ko and ($lang == "ko" or $lang == "all"){
+    $el: if(length($el) > 0, append($el, if($root != true, ":lang(ko) &", "&:lang(ko)"), "comma"), if($root != true, ":lang(ko) &", "&:lang(ko)"));
+  }
 
-  & > [class*='col'] {
-    padding-left: $spacing;
-    padding-right: $spacing;
+  #{$el} {
+    @content
   }
 }
