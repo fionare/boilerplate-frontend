@@ -3,5 +3,11 @@
 @import 'base/_fonts';
 @import 'base/_global';
 
+// Helpful components
+@import 'base/components/_cover';
+
+// Development components
+@import 'base/components/_guide';
+
 // inject:imports
 // endinject
