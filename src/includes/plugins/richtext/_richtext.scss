@@ -345,7 +345,7 @@ $rtf-quote-content-space: 5px;
     }
   }
 
-  .rtf-media {
+  .rtf-embed {
     &-1x1 {
       @extend %iframe-contained;
       padding-bottom: 100%;

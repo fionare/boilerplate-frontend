@@ -13,9 +13,9 @@ export default function(elem) {
         .is('div')
     ) {
       $(this).unwrap();
-      $(this).wrap('<div class="richtext-media-16x9"></div>');
+      $(this).wrap('<div class="rtf-embed-16x9"></div>');
     } else {
-      $(this).wrap('<div class="richtext-media-16x9"></div>');
+      $(this).wrap('<div class="rtf-embed-16x9"></div>');
     }
   });
 
@@ -29,9 +29,9 @@ export default function(elem) {
           .is('p')
       ) {
         $(this).unwrap();
-        $(this).wrap('<div class="richtext-media-16x9"></div>');
+        $(this).wrap('<div class="rtf-embed-16x9"></div>');
       } else {
-        $(this).wrap('<div class="richtext-media-16x9"></div>');
+        $(this).wrap('<div class="rtf-embed-16x9"></div>');
       }
     } else if (src.indexOf('google') > 0) {
       if (
@@ -40,9 +40,9 @@ export default function(elem) {
           .is('p')
       ) {
         $(this).unwrap();
-        $(this).wrap('<div class="richtext-media-4x3"></div>');
+        $(this).wrap('<div class="rtf-embed-4x3"></div>');
       } else {
-        $(this).wrap('<div class="richtext-media-4x3"></div>');
+        $(this).wrap('<div class="rtf-embed-4x3"></div>');
       }
     }
   });
