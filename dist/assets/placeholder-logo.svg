@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="56px" viewBox="0 0 200 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>placeholder-logo</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-40.000000, -20.000000)">
+            <g id="placeholder-logo" transform="translate(40.000000, 20.000000)">
+                <rect id="Rectangle" stroke="#EEEEEE" fill="#FFFFFF" x="0.5" y="0.5" width="199" height="55"></rect>
+                <line x1="0" y1="1" x2="200" y2="55" id="Path" stroke="#EEEEEE"></line>
+                <line x1="0" y1="1" x2="200" y2="55" id="Path-Copy" stroke="#EEEEEE" transform="translate(100.000000, 28.000000) scale(-1, 1) translate(-100.000000, -28.000000) "></line>
+                <rect id="Rectangle" fill="#FFFFFF" x="52" y="10" width="96" height="37"></rect>
+                <text id="LOGO" font-family="HelveticaNeue-Bold, Helvetica Neue" font-size="28" font-weight="bold" fill="#EEEEEE">
+                    <tspan x="59.288" y="39">LOGO</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

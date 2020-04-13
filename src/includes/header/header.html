@@ -1,3 +1,24 @@
-<header>
-	{% include "navbar/navbar.html" %}
+<header class="global-header">
+	<div class="container-fluid">
+		<nav class="navbar row no-gutters justify-content-between align-items-center">
+			<h1 class="nav-logo col-auto"><a href="#" class="nav-link" aria-label="Website Title Homepage"><img src="assets/placeholder-logo.svg" class="nav-logo-img" alt="Website Title"></a></h1>
+			<div class="nav-primary col-auto">
+				<ul class="nav-group">
+					<li class="nav-item d-none d-md-inline-block"><a href="#" class="nav-link">Menu 1</a></li>
+					<li class="nav-item d-none d-md-inline-block"><a href="#" class="nav-link">Menu 2</a></li>
+					<li class="nav-item d-none d-md-inline-block"><a href="#" class="nav-link">Menu 3</a></li>
+					<li class="nav-item d-none d-md-inline-block"><a href="#" class="nav-link">Menu 4</a></li>
+					<button class="nav-button nav-toggle-menu d-md-none js-nav-toggle menu"><span class="icon"></span></button>
+				</ul>
+			</div>
+			<div class="nav-mobile d-md-none js-nav-mobile">
+				<ul class="nav-group">
+					<li class="nav-item"><a href="#" class="nav-link">Menu 1</a></li>
+					<li class="nav-item"><a href="#" class="nav-link">Menu 2</a></li>
+					<li class="nav-item"><a href="#" class="nav-link">Menu 3</a></li>
+					<li class="nav-item"><a href="#" class="nav-link">Menu 4</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
 </header>
