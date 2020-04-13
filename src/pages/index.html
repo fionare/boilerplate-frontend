@@ -3,7 +3,10 @@
 
 {% block main %}
 <section>
-  {% set name = "world" %}
-  {% include "intro/intro.html" %}
+  <div class="container">
+    {% set name = "world" %}
+    {% include "intro/intro.html" %}
+    <p>Hello World</p>
+  </div>
 </section>
 {% endblock %}

@@ -1,0 +1,149 @@
+.global-header {
+  z-index: 1100;
+  background-color: $white;
+
+  .container,
+  .container-fluid {
+    height: 100%;
+    max-width: inherit;
+  }
+
+  .navbar {
+    height: 100%;
+  }
+
+  // Logo vertical spacing
+  .nav-logo {
+    height: 100%;
+    padding-top: $spacer * .5;
+    padding-bottom: $spacer * .5;
+
+    @include media-breakpoint-up(md) {
+      padding-top: $spacer * .75;
+      padding-bottom: $spacer * .75;
+    }
+    
+    @include media-breakpoint-up(xl) {
+      padding-top: $spacer * .75;
+      padding-bottom: $spacer * .75;
+    }
+  }
+
+  // Logo size
+  .nav-logo-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+
+    // Control size of logo in different viewports
+    @include media-breakpoint-up(md) {
+      max-width: 200px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      max-width: 200px;
+    }
+
+    @include media-breakpoint-up(xl) {
+      max-width: 200px;
+    }
+  }
+
+  .nav-link {
+    color: $body-color;
+  }
+
+  .nav-group {
+    @include list-unstyled;
+    margin-bottom: 0;
+  }
+
+  .nav-button {
+    @include button-unstyled;
+    display: block;
+
+    .icon {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+
+  .nav-primary {
+    .nav-item {
+      // Insert font settings here
+      font-family: $font-family-base;
+      font-size: $font-size-base;
+      font-weight: $font-weight-bold;
+
+      @include media-breakpoint-up(md) {
+        display: inline-block;
+        font-size: $font-size-base;
+        vertical-align: middle;
+      }
+
+      @include media-breakpoint-up(xl) {
+        font-size: $font-size-md;
+      }
+
+      // Horizontal spacing between nav-item
+      &+.nav-item {
+        @include media-breakpoint-up(md) {
+          margin-left: $spacer * .75;
+        }
+
+        @include media-breakpoint-up(lg) {
+          margin-left: $spacer;
+        }
+
+        @include media-breakpoint-up(xl) {
+          margin-left: $spacer * 1.5;
+        }
+      }
+    }
+
+    .nav-link {
+      padding: $spacer * .25;
+    }
+  }
+
+  // Menu toggle button
+  .nav-toggle-menu {
+    position: relative;
+    width: 48px;
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      background-image: url('../assets/placeholder-icon-menu.svg');
+    }
+
+    &.active {
+      .icon {
+        width: 48px;
+        height: 48px;
+        background-image: url('../assets/placeholder-icon-close.svg');
+      }
+    }
+  }
+
+  .nav-mobile {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 76px;
+    border-top: 1px solid $body-bg;
+    padding-top: $spacer * .5;
+    padding-bottom: $spacer * .5;
+    background-color: rgba($white, .75);
+
+    .nav-link {
+      display: block;
+      padding: ($spacer * .5) $spacer;
+    }
+  }
+}

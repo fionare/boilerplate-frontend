@@ -1,0 +1,44 @@
+.cover {
+  position: relative;
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      &#{$infix}-4x1 {
+        padding-bottom: 25%;
+      }
+
+      &#{$infix}-8x3 {
+        padding-bottom: 37.5%;
+      }
+
+      &#{$infix}-16x9 {
+        padding-bottom: 56.25%;
+      }
+
+      &#{$infix}-4x3 {
+        padding-bottom: 75%;
+      }
+
+      &#{$infix}-1x1 {
+        padding-bottom: 100%;
+      }
+
+      &#{$infix}-3x4 {
+        padding-bottom: 133%;
+      }
+
+      &#{$infix}-1x2 {
+        padding-bottom: 200%;
+      }
+    }
+  }
+
+  .image {
+    @include positionCover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

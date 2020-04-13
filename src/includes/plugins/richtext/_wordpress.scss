@@ -1,0 +1,95 @@
+  .rtf {
+
+    // WP Gallery
+    .wp-block-image {
+      @include media-breakpoint-up(md) {
+        margin-top: $rtf-media-space * .75;
+        margin-bottom: $rtf-media-space * .75;
+      }
+
+      figcaption {
+        margin-top: $spacer * .25;
+        margin-bottom: 0;
+        font-size: $rtf-font-size-base;
+
+        @include media-breakpoint-up(lg) {
+          font-size: $rtf-font-size-base * .875;
+        }
+      }
+    }
+
+    .blocks-gallery-grid {
+      @include list-unstyled;
+      margin-top: $rtf-media-space * .75;
+      margin-bottom: -$rtf-media-space * .25;
+
+      @include media-breakpoint-up(md) {
+        margin-top: $rtf-media-space;
+        margin-bottom: $rtf-media-space * .5;
+      }
+
+      li {
+        padding-left: 0;
+
+        &:before {
+          content: none;
+        }
+      }
+    }
+
+    .wp-block-embed {
+      @include media-breakpoint-up(md) {
+        margin-top: $rtf-media-space * .75;
+        margin-bottom: $rtf-media-space * .75;
+      }
+    }
+
+    // WP Block Group
+    .wp-block-group {
+      $horizontal-space: $rtf-media-space * .5;
+      margin-left: -$horizontal-space;
+      margin-right: -$horizontal-space;
+      padding-left: $horizontal-space;
+      padding-right: $horizontal-space;
+
+      @include media-breakpoint-up(md) {
+        $horizontal-space: $rtf-media-space * .75;
+        margin-left: -$horizontal-space;
+        margin-right: -$horizontal-space;
+        padding-left: $horizontal-space;
+        padding-right: $horizontal-space;
+      }
+
+      @include media-breakpoint-up(lg) {
+        $horizontal-space: $rtf-media-space;
+        margin-left: -$horizontal-space;
+        margin-right: -$horizontal-space;
+        padding-left: $horizontal-space;
+        padding-right: $horizontal-space;
+      }
+
+      &.has-background {
+        $vertical-space: $rtf-media-space * .5;
+        padding-top: $vertical-space;
+        padding-bottom: $vertical-space;
+
+        @include media-breakpoint-up(lg) {
+          $vertical-space: $rtf-media-space * .75;
+          margin-top: $vertical-space;
+          margin-bottom: $vertical-space;
+          padding-top: $vertical-space;
+          padding-bottom: $vertical-space;
+        }
+      }
+
+      .wp-block-group__inner-container {
+        &> :first-child {
+          margin-top: 0;
+        }
+
+        &> :last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }

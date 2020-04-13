@@ -1,0 +1,14 @@
+// Add a visual ruler on top of the browser screen
+// Intended for development purpose
+
+.guide {
+  // For development purpose
+  position: fixed;
+  z-index: 20000;
+  top: 0;
+  left: 0;
+  background: url('../assets/ruler.svg') top left no-repeat;
+  width: 100%;
+  height: 32px;
+  mix-blend-mode: difference;
+}

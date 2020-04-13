@@ -1,0 +1,385 @@
+// Configuration
+// Media: Blockquote, Image, and others
+$rtf-media-space: $spacer * 2;
+
+// -- Fonts
+$rtf-font-family-base: $font-family-base;
+$rtf-font-family-base-ja: $font-family-base-ja;
+$rtf-font-family-heading: $headings-font-family;
+$rtf-font-family-monospace: monospace;
+$rtf-font-size-base: 1rem;
+
+// -- Heading (3 steps)
+// This is usually useful for WordPress where people abuse
+// heading tags to edit the text size
+
+// ---- Step 1
+$rtf-heading-1-size: 1.5em; // 24px
+$rtf-heading-1-weight: $font-weight-bold;
+$rtf-heading-1-space: $rtf-media-space * .4;
+
+// ---- Step 2
+$rtf-heading-2-size: 1.25em; // 20px
+$rtf-heading-2-weight: $font-weight-bold;
+$rtf-heading-2-space: $rtf-media-space * .4;
+
+// ---- Step 3
+$rtf-heading-3-size: 1.125em; // 18px
+$rtf-heading-3-weight: $font-weight-bold;
+$rtf-heading-3-space: $rtf-media-space * .4;
+
+// -- Color
+// ---- Brand
+$rtf-color-primary: $primary;
+$rtf-color-secondary: $secondary;
+
+// ---- Body
+$rtf-color-base: $body-color;
+$rtf-color-body: transparentize($rtf-color-base, .2);
+
+// ---- Headings
+$rtf-color-headings: $primary;
+
+// ---- Link
+$rtf-color-link: $rtf-color-primary;
+
+// -- List
+$rtf-list-indent: 25px;
+
+// ---- Unordered
+$rtf-bullet-size: 8px;
+$rtf-bullet-color: $primary;
+
+// -- Blockquote
+$rtf-quote-symbol-space: 40px;
+$rtf-quote-symbol-size: $rtf-quote-symbol-space * .5;
+$rtf-quote-content-space: 5px;
+
+.rtf {
+  font-family: $rtf-font-family-base;
+  font-size: $rtf-font-size-base;
+  line-height: 1.5;
+  color: $rtf-color-body;
+
+  @include clearfix;
+
+  @include cjk {
+    font-size: $rtf-font-size-base * .9375;
+  }
+
+  @include cjk("ja") {
+    font-family: $rtf-font-family-base-ja;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: $rtf-font-size-base;
+  }
+
+  &>* {
+    margin-bottom: $rtf-media-space * .4;
+  }
+
+  a:not([class*='btn']) {
+    color: $rtf-color-link;
+  }
+
+  small {
+    font-size: round($rtf-font-size-base * .9);
+  }
+
+  code {
+    font-family: $rtf-font-family-monospace;
+  }
+
+  // Headings
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $rtf-font-family-heading;
+    color: $rtf-color-headings;
+  }
+
+  // -- Heading Step 1
+  h1,
+  h2 {
+    font-size: $rtf-heading-1-size;
+    font-weight: $rtf-heading-1-weight;
+
+    @include media-breakpoint-up(lg) {
+      margin-top: $rtf-media-space;
+      margin-bottom: $rtf-heading-1-space;
+    }
+  }
+
+  // -- Heading Step 2
+  h3,
+  h4 {
+    font-size: $rtf-heading-2-size;
+    font-weight: $rtf-heading-2-weight;
+
+    @include media-breakpoint-up(lg) {
+      margin-top: $rtf-media-space;
+      margin-bottom: $rtf-heading-2-space;
+    }
+  }
+
+  // -- Heading Step 3
+  h5,
+  h6 {
+    font-size: $rtf-heading-3-size;
+    font-weight: $rtf-heading-3-weight;
+
+    @include media-breakpoint-up(lg) {
+      margin-top: $rtf-media-space;
+      margin-bottom: $rtf-heading-3-space;
+    }
+  }
+
+  p {
+    font-size: $rtf-font-size-base;
+
+    @include media-breakpoint-up(lg) {
+      font-size: $rtf-font-size-base;
+    }
+
+    &.intro {
+      font-size: 1.125em;
+      color: $rtf-color-base;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding-left: $rtf-list-indent;
+
+    li {
+      position: relative;
+
+      &:before {
+        content: ' ';
+        position: absolute;
+        top: 1em * .5;
+        left: -($rtf-list-indent) + ($rtf-bullet-size * .25);
+        width: $rtf-bullet-size;
+        height: $rtf-bullet-size;
+        background-color: $rtf-bullet-color;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  ol {
+    padding-left: $rtf-list-indent;
+  }
+
+  li {
+    padding-left: $rtf-list-indent * .25;
+
+    &+li {
+      margin-top: $rtf-list-indent * .25;
+    }
+  }
+
+  blockquote {
+    position: relative;
+    padding-left: $rtf-quote-symbol-space;
+    margin-top: $rtf-media-space;
+    margin-bottom: $rtf-media-space;
+
+    // Open and Close Quote
+    &:before,
+    p:last-of-type:after {
+      content: ' ';
+      opacity: .1;
+      display: block;
+      position: absolute;
+      width: $rtf-quote-symbol-size;
+      height: $rtf-quote-symbol-size;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    // Open quote
+    &:before {
+      top: 0;
+      left: 0;
+      background-image: url('data:image/svg+xml,<svg width="20" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 18V8c0-2.551.692-4.348 2-6C3.462 1.087 5.436.297 8 0v5c-1.497.226-2.648.66-4 1-.257.933-.79 1.823-1 3h5v9H0zm12 0V8c0-2.551.692-4.348 2-6 1.462-.913 3.436-1.703 6-2v5c-1.497.226-2.648.66-4 1-.257.933-.79 1.823-1 3h5v9h-8z" fill-rule="evenodd"/></svg>');
+    }
+
+    // Close quote
+    p:last-of-type:after {
+      right: 0;
+      bottom: 0;
+      background-image: url('data:image/svg+xml,<svg width="20" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M20 0v10c0 2.551-.692 4.348-2 6-1.462.913-3.436 1.703-6 2v-5c1.497-.226 2.648-.66 3-1 1.257-.933 1.79-1.823 2-3h-5V0h8zM8 0v10c0 2.551-.692 4.348-2 6-1.462.913-3.436 1.703-6 2v-5c1.497-.226 2.648-.66 3-1 1.257-.933 1.79-1.823 2-3H0V0h8z" fill-rule="evenodd"/></svg>');
+    }
+
+    // Content
+    p {
+      position: relative;
+      font-size: $rtf-heading-2-size;
+      line-height: 1.5;
+      color: $rtf-color-base;
+
+      &:last-of-type {
+        margin-bottom: $rtf-quote-content-space;
+        padding-right: $rtf-quote-symbol-space;
+      }
+    }
+
+    // Footer and Citation
+    cite {
+      opacity: 0.8;
+      padding-right: $rtf-quote-symbol-space;
+      font-size: 0.9em;
+      font-style: normal;
+    }
+  }
+
+  figure,
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+
+    &.alignleft {
+      float: left;
+      max-width: 33%;
+      margin-top: $rtf-media-space * .5 * .25;
+      margin-right: $rtf-media-space * 0.5;
+      margin-bottom: $rtf-media-space * 0.5;
+    }
+
+    &.alignright {
+      float: right;
+      max-width: 33%;
+      margin-top: $rtf-media-space * .5 * .25;
+      margin-left: $rtf-media-space * .5;
+      margin-bottom: $rtf-media-space * 0.5;
+    }
+
+    &.aligncenter {
+      float: none;
+      margin-top: $rtf-media-space * .5;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: $rtf-media-space * .5;
+
+      @include media-breakpoint-up(md) {
+        margin-top: $rtf-media-space;
+        margin-bottom: $rtf-media-space;
+      }
+    }
+
+    &.alignnone {
+      float: none;
+      width: 100%;
+      margin-top: $rtf-media-space * .5;
+      margin-bottom: $rtf-media-space * .5;
+
+      @include media-breakpoint-up(md) {
+        margin-top: $rtf-media-space;
+        margin-bottom: $rtf-media-space;
+      }
+    }
+  }
+
+  tr {
+    border-bottom: 1px solid #e8e8e8;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  th,
+  td {
+    padding: ($spacer * .5) ($spacer * .75);
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  td {
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+
+    &:first-child {
+      border-left: 0;
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  // iframe and video embed
+  %iframe-contained {
+    position: relative;
+    margin-top: $rtf-media-space * .5;
+    margin-bottom: $rtf-media-space * .5;
+
+    @include media-breakpoint-up(lg) {
+      margin-top: $rtf-media-space;
+      margin-bottom: $rtf-media-space;
+    }
+
+    video,
+    iframe {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .rtf-embed {
+    &-1x1 {
+      @extend %iframe-contained;
+      padding-bottom: 100%;
+    }
+
+    &-4x3 {
+      @extend %iframe-contained;
+      padding-bottom: 75%;
+    }
+
+    &-16x9 {
+      @extend %iframe-contained;
+      padding-bottom: 56.25%;
+    }
+
+    &-2x1 {
+      @extend %iframe-contained;
+      padding-bottom: 50%;
+    }
+  }
+
+  &>*:first-child {
+    margin-top: 0;
+
+    @include media-breakpoint-up(lg) {
+      margin-top: 0;
+    }
+  }
+
+  &>*:last-child {
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: 0;
+    }
+  }
+}

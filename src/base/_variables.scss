@@ -1,5 +1,5 @@
 // =================================================
-// | Required by Bootstrap 4.1.1                   |
+// | Required by Bootstrap 4.3.1                   |
 // =================================================
 
 @import 'bootstrap/scss/functions';
@@ -14,124 +14,104 @@
 $spacer: 20px; // Default: 1rem
 $grid-gutter-width: $spacer * 2; // Default: 30px
 
-// NOTE: Every time a new breakpoint is added, the
-//       CSS file will get bigger by 10KB.
-
-// IDEA: Add "tiny" before "xs" to support small
-//       Apple devices
-
+// Every time a new breakpoint is added, the
+// CSS file will get bigger by around 10KB
 $grid-breakpoints: (
-  xs: 0,
+  tiny: 0,
+  xs: 321px,
+  sm: 480px,
   md: 768px,
-  lg: 1200px
+  lg: 991px,
+  xl: 1280px
 );
 
 $container-max-widths: (
   md: 100%,
-  lg: 1120px
+  lg: 1280px
 );
-
-// Brand Colors
-
-$primary: #000000;
-$secondary: #111111;
-
-// Colors
-
-$body-bg: $white;
-$body-color: #404040;
-
-// Bootstrap colors
-
-$theme-colors: (
-  'primary': $primary,
-  'secondary': $secondary,
-  'success': $success,
-  'info': $info,
-  'warning': $warning,
-  'danger': $danger,
-  'light': $light,
-  'dark': $dark
-);
-
-// If you need to remove some Bootstrap colors to minimize the CSS
-
-// $theme-colors: map-remove($theme-colors, "info", "light", "dark");
-// NOTE: $primary, $success, $danger is required for Bootstrap links, buttons, and form states
 
 // Bootstrap spacers
-
+// Affects margin and padding classes
+// Example: .p-3, .mr-3
 $spacers: (
   (
     0: 0,
-    1: (
-      $spacer * 0.25
-    ),
-    2: (
-      $spacer * 0.5
-    ),
+    1: ($spacer * .25),
+    2: ($spacer * .5),
     3: $spacer,
-    4: (
-      $spacer * 2
-    ),
-    5: (
-      $spacer * 3
-    ),
-    6: (
-      $spacer * 4
-    )
+    4: ($spacer * 2),
+    5: ($spacer * 3)
   )
 );
 
-// Text colors
+// Brand Colors
+$primary: #000000;
+$secondary: #111111;
 
+$body-bg: #eeeeee; // Body background color
+$body-color: #333333; // Default text color
+
+// Bootstrap colors
+// Assigning to theme-colors will generate the respective classes combined with its value.
+// Example: .text-primary, .bg-primary
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary
+);
+
+// Remove some Bootstrap colors to minimize the CSS
+$theme-colors: map-remove($theme-colors, "success", "info", "warning", "danger", "light", "dark");
+
+
+// Text colors
 $headings-color: inherit;
 
+// Link colors
 $link-color: $white;
 $link-hover-color: $white;
 $link-decoration: none;
 $link-hover-decoration: none;
 
-// Fonts Families
-
-$font-family-sans-serif: 'Roboto', sans-serif;
+// Latin font-family references
+$font-family-sans-serif: 'Roboto', Helvetica, Arial, sans-serif;
 $font-family-serif: serif;
 $font-family-monospace: monospace;
 
-$font-family-sans-serif-ja: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-  Osaka, Meiryo, 'メイリオ', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-$font-family-serif-ja: 'Hiragino Mincho Pro', 'ヒラギノ明朝 Pro W3', 'ＭＳ 明朝',
-  'ＭＳ Ｐ明朝', serif;
+// Japanese font-family references
+$font-family-sans-serif-ja: 'Roboto', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Osaka, Meiryo, 'メイリオ', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+$font-family-serif-ja: 'Roboto', 'Hiragino Mincho Pro', 'ヒラギノ明朝 Pro W3', 'ＭＳ 明朝', 'ＭＳ Ｐ明朝', serif;
 
-// IDEA: Japanese sans-serif font stack
-// font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Osaka, Meiryo, "メイリオ", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-
-// IDEA: Japanese serif font stack
-// font-family: "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "ＭＳ 明朝", "ＭＳ Ｐ明朝", serif;
+// font-weight references
+$font-weight-lighter: 100; // Default: lighter
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$font-weight-bolder: 800; // Sometimes 900. Default: bolder
 
 $font-family-base: $font-family-sans-serif;
-$font-family-display: 'Roboto', sans-serif;
-$font-family-display-ja: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3',
-  Osaka, Meiryo, 'メイリオ', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-$headings-font-family: $font-family-display;
+$font-family-base-ja: $font-family-sans-serif-ja;
 
-$font-size-html: 18px;
-$font-size-html-ja: 15px;
+$font-size-html: 100%;
 $font-size-base: 1rem;
-$font-weight-base: 700;
+$font-weight-base: $font-weight-normal;
 
-$font-size-lg: ($font-size-base * 1.25);
-$font-size-sm: ($font-size-base * 0.875);
-$font-size-xs: ($font-size-base) * 0.75;
+$font-size-lg: ($font-size-base * 1.25); // 20px
+$font-size-md: ($font-size-base * 1.125); // 18px
+$font-size-sm: ($font-size-base * .875); // 14px
+$font-size-xs: ($font-size-base) * .75; // 12px
 
-$h1-font-size: $font-size-base * 2.5;
-$h2-font-size: $font-size-base * 2;
-$h3-font-size: $font-size-base * 1.75;
-$h4-font-size: $font-size-base * 1.5;
-$h5-font-size: $font-size-base * 1.25;
-$h6-font-size: $font-size-base;
+$headings-font-family: $font-family-sans-serif;
+$headings-font-family-ja: $font-family-sans-serif;
+$headings-font-weight: $font-weight-bold;
 
-// https://material.io/design/typography/the-type-system.html#type-scale
+$h1-font-size: $font-size-base * 2.5; // 40px
+$h2-font-size: $font-size-base * 2; // 32px
+$h3-font-size: $font-size-base * 1.75; // 28px
+$h4-font-size: $font-size-base * 1.5; // 24px
+$h5-font-size: $font-size-base * 1.25;  // 20px
+$h6-font-size: $font-size-base; // 16px
+
+// Reference: https://material.io/design/typography/the-type-system.html#type-scale
 // $h1-font-size          : $font-size-base * 6;     // 96px
 // $h2-font-size          : $font-size-base * 3.75;  // 60px
 // $h3-font-size          : $font-size-base * 3;     // 48px
@@ -140,27 +120,34 @@ $h6-font-size: $font-size-base;
 // $h6-font-size          : $font-size-base * 1.25;  // 20px
 
 // Paragraphs
-
-$paragraph-margin-bottom: 0.875rem; // Default: 1rem
+$paragraph-margin-bottom: 1.25rem; // Default: 1rem
 
 // SNS Colors
-
-$sns-twitter-primary: #1da1f2;
+// Reference: https://brandcolors.net
 $sns-facebook-primary: #3b5998;
 $sns-instagram-primary: #e1306c;
+$sns-line-primary: #00c300;
+$sns-linkedin-primary: #0077b5;
+$sns-twitter-primary: #1da1f2;
 $sns-wechat-primary: #7bb32e;
 $sns-youtube-primary: #ff0000;
 
 // Various settings
-// https://getbootstrap.com/docs/4.1/getting-started/theming/#sass-options
-
-$enable-rounded: false;
+// Reference: https://getbootstrap.com/docs/4.3/getting-started/theming/#sass-options
+$enable-gradients: false; // predefined background gradients
 $enable-grid-classes: true; // .container, .row, .col-md-1, etc.
-$enable-gradients: false;
-$enable-shadows: false;
+$enable-rounded: false; // predefined border-radius
+$enable-shadows: false; // predefined text-shadow, box-shadow
 $enable-transitions: false;
-// $enable-caret: false;
-// $enable-print-styles: false;
+$enable-caret: false;
+$enable-print-styles: true;
+$enable-responsive-font-sizes: false;
+
+// Useful for multilingual website
+// CJK language settings
+$enable-lang-ja: true;
+$enable-lang-zh: false;
+$enable-lang-ko: false;
 
 // =================================================
 // | Bootstrap References                          |
@@ -169,7 +156,6 @@ $enable-transitions: false;
 // =================================================
 
 // Layering with z-index
-
 // $zindex-dropdown:          1000;
 // $zindex-sticky:            1020;
 // $zindex-fixed:             1030;
@@ -179,20 +165,13 @@ $enable-transitions: false;
 // $zindex-tooltip:           1070;
 
 // How to use media queries
-
 // Default, using "min-width" for mobile-first approach
 // @include media-breakpoint-up(sm) { ... }
-// @include media-breakpoint-up(md) { ... }
-// @include media-breakpoint-up(lg) { ... }
 
 // Using "max-width" if you really need it...
-// @include media-breakpoint-down(sm) { ... }
 // @include media-breakpoint-down(md) { ... }
-// @include media-breakpoint-down(lg) { ... }
 
 // And in between...
-// @include media-breakpoint-only(sm) { ... }
-// @include media-breakpoint-only(md) { ... }
 // @include media-breakpoint-only(lg) { ... }
 
 // Or between 2 defined breakpoints
@@ -205,5 +184,5 @@ $enable-transitions: false;
 // =================================================
 
 @import 'bootstrap/scss/reboot'; // Reset CSS
-@import 'bootstrap/scss/grid'; // Grid system
+@import 'bootstrap/scss/grid'; // Grid system with flexbox
 @import 'bootstrap/scss/utilities'; // Clearfix, screenreader, etc
