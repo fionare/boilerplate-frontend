@@ -41,21 +41,27 @@
 
 // Override styles for CJK
 @mixin cjk($lang: "all", $root: false) {
+  $cjk: 0;
   $el: ();
 
   @if $enable-lang-ja and ($lang == "ja" or $lang == "all") {
     $el: if(length($el) > 0, append($el, if($root != true, ":lang(ja) &", "&:lang(ja)"), "comma"), if($root != true, ":lang(ja) &", "&:lang(ja)"));
+    $cjk: 1;
   }
 
   @if $enable-lang-zh and ($lang == "zh" or $lang == "all") {
     $el: if(length($el) > 0, append($el, if($root != true, ":lang(zh) &", "&:lang(zh)"), "comma"), if($root != true, ":lang(zh) &", "&:lang(zh)"));
+    $cjk: 1;
   }
 
   @if $enable-lang-ko and ($lang == "ko" or $lang == "all"){
     $el: if(length($el) > 0, append($el, if($root != true, ":lang(ko) &", "&:lang(ko)"), "comma"), if($root != true, ":lang(ko) &", "&:lang(ko)"));
+    $cjk: 1;
   }
 
-  #{$el} {
-    @content
+  @if($cjk == 1) {
+    #{$el} {
+      @content
+    }
   }
 }
