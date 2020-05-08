@@ -3,7 +3,8 @@
     @include media-breakpoint-up($breakpoint) {
       $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-      &#{$infix}-empty {
+      // Similar to bootstrap no-gutters
+      &#{$infix}-none {
         @include colSpacer($spacer * 0);
       }
 
@@ -15,16 +16,24 @@
         @include colSpacer($spacer * .5);
       }
 
-      &#{$infix}-normal {
+      &#{$infix}-narrow {
+        @include colSpacer($spacer * .75);
+      }
+
+      &#{$infix}-base {
         @include colSpacer($spacer * 1);
       }
 
-      &#{$infix}-wider {
+      &#{$infix}-wide {
         @include colSpacer($spacer * 1.25);
       }
 
-      &#{$infix}-widest {
+      &#{$infix}-wider {
         @include colSpacer($spacer * 1.5);
+      }
+
+      &#{$infix}-widest {
+        @include colSpacer($spacer * 2);
       }
     }
   }
