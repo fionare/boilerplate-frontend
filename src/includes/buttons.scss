@@ -1,3 +1,229 @@
 .btn {
   display: inline-block;
+  position: relative;
+  max-width: 100%;
+  white-space: nowrap;
+  line-height: 1;
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  text-align: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color .25s, border-color .25s;
+
+  .btn-text {
+    text-align: center;
+  }
+
+  &:active,
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+// Medium and large is only visibly different in desktop size
+// For smartphone and tablet, they will appear in similar size for accessibility
+.btn-medium {
+  min-width: 120px;
+  padding: ($font-size-base * 1) ($font-size-base * 1.25);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  @include media-breakpoint-up(xs) {
+    min-width: 150px;
+    padding: ($font-size-base * 1.25) ($font-size-base * 1.5);
+    font-size: $font-size-base;
+    letter-spacing: 1px;
+  }
+
+  @include media-breakpoint-up(md) {
+    min-width: 200px;
+    padding: ($font-size-base * 1.25) ($font-size-base * 1.5);
+    font-size: $font-size-sm;
+  }
+
+  @include media-breakpoint-up(lg) {
+    min-width: 240px;
+    padding: ($font-size-base * 1) ($font-size-base * 2);
+  }
+}
+
+.btn-large {
+  min-width: 180px;
+  padding: ($font-size-base * 1) ($font-size-base * 2);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  @include media-breakpoint-up(xs) {
+    min-width: 200px;
+    padding: ($font-size-base * 1.25) ($font-size-base * 2);
+    font-size: $font-size-base;
+    letter-spacing: 1px;
+  }
+
+  @include media-breakpoint-up(md) {
+    min-width: 240px;
+    padding: ($font-size-base * 1.25) ($font-size-base * 2);
+    font-size: $font-size-sm;
+  }
+
+  @include media-breakpoint-up(lg) {
+    min-width: 300px;
+    padding: ($font-size-base * 1.25) ($font-size-base * 2.5);
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    letter-spacing: 1px;
+  }
+}
+
+// Rounded corner button depends on the size settings above
+.btn-rounded {
+  &.btn-medium {
+
+    &,
+    &:after {
+      border-radius: ($font-size-sm + (($font-size-base * 1) * 2)) * .5;
+
+      @include media-breakpoint-up(xs) {
+        border-radius: ($font-size-base + (($font-size-base * 1.25) * 2)) * .5;
+      }
+
+      @include media-breakpoint-up(md) {
+        border-radius: ($font-size-sm + (($font-size-base * 1.25) * 2)) * .5;
+      }
+
+      @include media-breakpoint-up(lg) {
+        border-radius: ($font-size-sm + (($font-size-base * 1) * 2)) * .5;
+      }
+    }
+  }
+
+  &.btn-large {
+
+    &,
+    &:after {
+      border-radius: ($font-size-sm + (($font-size-base * 1) * 2)) * .5;
+
+      @include media-breakpoint-up(xs) {
+        border-radius: ($font-size-base + (($font-size-base * 1.25) * 2)) * .5;
+      }
+
+      @include media-breakpoint-up(md) {
+        border-radius: ($font-size-sm + (($font-size-base * 1.25) * 2)) * .5;
+      }
+
+      @include media-breakpoint-up(lg) {
+        border-radius: ($font-size-sm + (($font-size-base * 1.25) * 2)) * .5;
+      }
+    }
+  }
+}
+
+// Basic solid button
+%btn-solid {
+  @extend .btn;
+}
+
+// Outline button border is on :after
+// This is necessary as setting it as normal border will mess up with the calculations above
+// TODO: Needs workaround
+// BUG: On certain screen sizes, the border will appear clipped
+%btn-outline {
+  @extend .btn;
+  position: relative;
+
+  &:after {
+    content: ' ';
+    @include positionCover;
+    border: 1px solid transparent;
+  }
+}
+
+// Semi-transparent blurred background with enhanced saturation
+%btn-solid-mix {
+  @extend %btn-solid;
+  -webkit-backdrop-filter: saturate(180%) blur(5px);
+}
+
+.btn-solid-mix-light {
+  @extend %btn-solid-mix;
+  background-color: rgba($white, .3);
+
+  .btn-text {
+    color: $white;
+  }
+
+  &:hover {
+    background-color: rgba($white, .2);
+  }
+}
+
+.btn-solid-mix-dark {
+  @extend %btn-solid-mix;
+  background-color: rgba($dark, .35);
+
+  .btn-text {
+    color: rgba($white, 5);
+    mix-blend-mode: exclusion;
+  }
+
+  &:hover {
+    background-color: rgba($dark, .3);
+  }
+}
+
+// Primary solid button
+.btn-solid-primary {
+  @extend %btn-solid;
+  background-color: $primary;
+  color: $white;
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: $white;
+  }
+}
+
+// Secondary solid button
+.btn-solid-secondary {
+  @extend %btn-solid;
+  background-color: $secondary;
+  color: $white;
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: $white;
+  }
+}
+
+// Dark outlined
+.btn-outline-dark {
+  @extend %btn-outline;
+  color: $body-color;
+
+  &:after {
+    border-color: rgba($dark, .5);
+  }
+
+  &:active,
+  &:hover,
+  &:focus {
+    border-color: rgba($dark, .75);
+    color: $body-color;
+  }
+}
+
+// White outlined
+.btn-outline-white {
+  @extend %btn-outline;
+  color: $white;
+
+  &:after {
+    border-color: rgba($white, .5)
+  }
 }
