@@ -17,7 +17,7 @@ $grid-gutter-width: $spacer * 2; // Default: 30px
 // Every time a new breakpoint is added, the
 // CSS file will get bigger by around 10KB
 $grid-breakpoints: (
-  tiny: 0,
+  xxs: 0,
   xs: 321px,
   sm: 480px,
   md: 768px,
