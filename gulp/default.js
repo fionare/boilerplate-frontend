@@ -258,3 +258,4 @@ const checkoutStableAndMerge = done => {
 };
 
 exports.default = gulp.series(checkStatus, checkBranches);
+exports.run = branchDefaultActions;
