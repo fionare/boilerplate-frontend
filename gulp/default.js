@@ -257,4 +257,15 @@ const checkoutStableAndMerge = done => {
 	});
 };
 
+const checkoutWPAndMerge = (done) => {
+	git.checkout("wp/dev", () => {
+		git.merge(branch, () => {
+			branch = "wp/dev";
+			done();
+		});
+	});
+};
+
 exports.default = gulp.series(checkStatus, checkBranches);
+exports.dev = branchDefaultActions;
+exports.build = gulp.series(setBranch, checkoutStableAndMerge, compile.run, bump, checkStatus, commitChanges, checkStatus, checkoutWPAndMerge);
