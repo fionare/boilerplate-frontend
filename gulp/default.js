@@ -55,6 +55,14 @@ const checkBranches = done => {
 	});
 };
 
+const setBranch = (done) => {
+	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
+		// set branch name as current branch
+		branch = currentBranch;
+		done();
+	});
+};
+
 const runOptions = done => {
 	let options = [];
 	let actions = [];
