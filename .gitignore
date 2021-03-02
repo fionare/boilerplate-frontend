@@ -92,3 +92,7 @@ resources/js/tmp/*
 
 # Vim recover files
 *.sw[op]
+
+# Sublime Text Workspace
+*.sublime-project
+*.sublime-workspace
