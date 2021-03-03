@@ -55,7 +55,8 @@ const checkBranches = done => {
 	});
 };
 
-const setBranch = (done) => {
+const preStableBuild = (done) => {
+	process.env.NODE_ENV = "production";
 	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
 		// set branch name as current branch
 		branch = currentBranch;
@@ -276,4 +277,4 @@ const checkoutWPAndMerge = (done) => {
 
 exports.default = gulp.series(checkStatus, checkBranches);
 exports.dev = branchDefaultActions;
-exports.build = gulp.series(setBranch, checkoutStableAndMerge, compile.run, bump, checkStatus, commitChanges, checkStatus, checkoutWPAndMerge);
+exports.build = gulp.series(preStableBuild, checkoutStableAndMerge, compile.run, bump, checkStatus, commitChanges, checkStatus, checkoutWPAndMerge);
