@@ -57,6 +57,7 @@ const checkBranches = done => {
 
 const preStableBuild = (done) => {
 	process.env.NODE_ENV = "production";
+	compile.setBranch("html/stable");
 	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
 		// set branch name as current branch
 		branch = currentBranch;
