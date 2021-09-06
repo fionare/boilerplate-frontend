@@ -4,7 +4,7 @@ const { src, dest } = require('gulp');
 const { paths } = require('./conf');
 
 const $ = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'auto*', '*css*']
+  pattern: ['gulp-*', 'autoprefixer', 'cssnano', 'postcss-sort-media-queries']
 });
 
 $.sass.compiler = require('node-sass');
