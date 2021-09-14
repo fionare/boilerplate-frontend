@@ -13,8 +13,8 @@ let gitRemoved = [];
 
 // checks working directory status
 // entry point when running gulp
-const checkStatus = done => {
-	git.status({ args: "--porcelain" }, function(err, stdout) {
+const checkStatus = (done) => {
+	git.status({ args: "--porcelain" }, function (err, stdout) {
 		if (stdout) {
 			// set status
 			workingDirectoryModified = true;
@@ -30,8 +30,8 @@ const checkStatus = done => {
 
 // checks current active branch
 // entry point when running gulp
-const checkBranches = done => {
-	git.revParse({ args: "--abbrev-ref HEAD" }, function(err, currentBranch) {
+const checkBranches = (done) => {
+	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
 		// set branch name as current branch
 		branch = currentBranch;
 		if (branch === "master") {
@@ -65,71 +65,71 @@ const preStableBuild = (done) => {
 	});
 };
 
-const runOptions = done => {
+const runOptions = (done) => {
 	let options = [];
 	let actions = [];
 
-	process.env.NODE_ENV = 'default';
-	
-	switch(branch) {
+	process.env.NODE_ENV = "default";
+
+	switch (branch) {
 		case "master":
-		options.push("Switch branch");
-		actions.push("switch");
-		break;
+			options.push("Switch branch");
+			actions.push("switch");
+			break;
 		case "html/stable":
-		options.push("Test build");
-		actions.push("buildtest");
-		options.push("Build and commit");
-		actions.push("build");
+			options.push("Build");
+			actions.push("buildtest");
+			options.push("Build and commit");
+			actions.push("build");
 		case "wp/dev":
-		options.push("Run preview server");
-		actions.push("preview");
-		options.push("Switch branch");
-		actions.push("switch");
-		break;
+			options.push("Run preview server");
+			actions.push("preview");
+			options.push("Switch branch");
+			actions.push("switch");
+			break;
 		default:
-		options.push("Run development server");
-		actions.push("dev");
-		options.push("Test build");
-		actions.push("buildtest");
-		options.push("Build to stable");
-		actions.push("build");
-		options.push("Switch branch");
-		actions.push("switch");
-		break;
+			options.push("Run development server");
+			actions.push("dev");
+			options.push("Build");
+			actions.push("buildtest");
+			options.push("Build to stable");
+			actions.push("build");
+			options.push("Switch branch");
+			actions.push("switch");
+			break;
 	}
 
 	let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
 
-	if(index > -1) {
-		switch(actions[index]) {
+	if (index > -1) {
+		switch (actions[index]) {
 			case "buildtest":
-			runTestBuildMode(done);
-			break;
+				runTestBuildMode(done);
+				break;
 			case "build":
-			branchBuildActions(done);
-			break;
+				branchBuildActions(done);
+				break;
 			case "dev":
-			runDevelopmentMode(done);
-			break;
+				runDevelopmentMode(done);
+				break;
 			case "preview":
-			runPreviewMode(done);
-			break;
+				runPreviewMode(done);
+				break;
 			case "switch":
-			branchSwitcher(done);
-			break;
+				branchSwitcher(done);
+				break;
 		}
 	} else {
 		done();
 	}
 };
 
-const branchSwitcher = done => {
-	git.exec({ args: "branch -l" }, function(err, stdout) {
+const branchSwitcher = (done) => {
+	git.exec({ args: "branch -l" }, function (err, stdout) {
 		let branches = [];
 		let options = [];
 		stdout = stdout.split("\n");
-		stdout.forEach(entry => {
+		stdout.forEach((entry) => {
 			if (entry.indexOf("*") !== 0 && entry !== "") {
 				options.push("Switch to branch " + entry.trim());
 				branches.push(entry.trim());
@@ -138,8 +138,8 @@ const branchSwitcher = done => {
 
 		let index = readlineSync.keyInSelect(options, chalk.inverse("[********]") + " > Choose an option: ");
 		if (index > -1) {
-			git.checkout(branches[index], function(err) {
-				if(err) {
+			git.checkout(branches[index], function (err) {
+				if (err) {
 					console.log(chalk.inverse("[********]") + " * Branch switching failed");
 				} else {
 					branch = branches[index];
@@ -152,14 +152,14 @@ const branchSwitcher = done => {
 	});
 };
 
-const branchBuildActions = done => {
+const branchBuildActions = (done) => {
 	if (branch === "html/stable") {
 		if (workingDirectoryModified) {
 			console.log(chalk.inverse("[********]") + " * html/stable branch shouldn't have modified files, please check the changes");
 			runOptions(done);
 		} else {
-			git.exec({args : " log -1 --pretty=%B"}, (err, stdout) => {
-				if(stdout.substring(0,5) === "Build") {
+			git.exec({ args: " log -1 --pretty=%B" }, (err, stdout) => {
+				if (stdout.substring(0, 5) === "Build") {
 					console.log(chalk.inverse("[********]") + " * Previous commit is a build, refuse to re-build");
 					runOptions(done);
 				} else {
@@ -181,40 +181,58 @@ const branchBuildActions = done => {
 	}
 };
 
-const runTestBuildMode = done => {
-	console.log(chalk.inverse("[********]") + " * Running test build mode");
-	process.env.NODE_ENV = 'production';
+const runTestBuildMode = (done) => {
+	console.log(chalk.inverse("[********]") + " * Running build mode");
+	process.env.NODE_ENV = "production";
 	compile.setBranch(branch);
-	gulp.series(compile.run, bump, done => {
-		console.log(chalk.inverse("[********]") + " * Test build completed");
-		done();
-	}, runOptions)();
+	gulp.series(
+		compile.run,
+		bump,
+		(done) => {
+			return gulp.src(["./dist/**/*"]).pipe(gulp.dest("./build/"));
+		},
+		(done) => {
+			console.log(chalk.inverse("[********]") + " * Build completed");
+			done();
+		},
+		runOptions
+	)();
 	done();
 };
 
-const runBuildMode = done => {
+const runBuildMode = (done) => {
 	console.log(chalk.inverse("[********]") + " * Running build mode");
-	process.env.NODE_ENV = 'production';
+	process.env.NODE_ENV = "production";
 	compile.setBranch(branch);
-	gulp.series(compile.run, bump, checkStatus, commitChanges, checkStatus, runOptions)();
+	gulp.series(
+		compile.run,
+		bump,
+		(done) => {
+			return gulp.src(["./dist/**/*"]).pipe(gulp.dest("./build/"));
+		},
+		checkStatus,
+		commitChanges,
+		checkStatus,
+		runOptions
+	)();
 	done();
-}
+};
 
-const runPreviewMode = done => {
+const runPreviewMode = (done) => {
 	console.log(chalk.inverse("[********]") + " * Running preview mode");
 	console.log(chalk.inverse("[********]") + " * You might want to undo changes after finishing");
 	gulp.series(serve)();
 	done();
-}
+};
 
-const runDevelopmentMode = done => {
+const runDevelopmentMode = (done) => {
 	console.log(chalk.inverse("[********]") + " * Running development mode");
 	compile.setBranch(branch);
 	gulp.series(compile.run, watch, serve)();
 	done();
-}
+};
 
-const branchDefaultActions = done => {
+const branchDefaultActions = (done) => {
 	if (branch === "wp/dev") {
 		runPreviewMode(done);
 	} else if (branch === "html/stable") {
@@ -224,41 +242,41 @@ const branchDefaultActions = done => {
 	}
 };
 
-const commitChanges = done => {
+const commitChanges = (done) => {
 	let files = gitStatus.split("\n");
-	files.forEach(entry => {
-		if(entry !== "") {
-			let status = entry.substring(0,2).trim();
-			let file = entry.substring(3)
-			if(status === "D" || status === "AD") {
+	files.forEach((entry) => {
+		if (entry !== "") {
+			let status = entry.substring(0, 2).trim();
+			let file = entry.substring(3);
+			if (status === "D" || status === "AD") {
 				gitRemoved.push(file);
 			}
 		}
 	});
 
 	let message = "Build commit";
-	if(branch !== "html/stable") {
+	if (branch !== "html/stable") {
 		message = "Pre-build commit (" + branch + ")";
 	}
 
-	const date = (new Date()).toString().substring(0,24);
+	const date = new Date().toString().substring(0, 24);
 
-	git.exec({args : " add *"}, () => {
-		if(gitRemoved.length > 0) {
-			git.exec({args : " rm " + gitRemoved.join(" ")}, () => {
-				git.exec({args : " commit -m '" + message + " on: "+ date +"'"}, () => {
+	git.exec({ args: " add *" }, () => {
+		if (gitRemoved.length > 0) {
+			git.exec({ args: " rm " + gitRemoved.join(" ") }, () => {
+				git.exec({ args: " commit -m '" + message + " on: " + date + "'" }, () => {
 					done();
 				});
 			});
 		} else {
-			git.exec({args : " commit -m '" + message + " on: "+ date +"'"}, () => {
+			git.exec({ args: " commit -m '" + message + " on: " + date + "'" }, () => {
 				done();
 			});
 		}
 	});
 };
 
-const checkoutStableAndMerge = done => {
+const checkoutStableAndMerge = (done) => {
 	git.checkout("html/stable", () => {
 		git.merge(branch, () => {
 			branch = "html/stable";
