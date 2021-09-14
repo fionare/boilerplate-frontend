@@ -87,12 +87,16 @@ Temporary Items
 # Temp
 resources/js/tmp/*
 
-# VS Code Workspace - this one is personal preference
+# Development files
+dist/*.html
+dist/**/*.html
+dist/includes/*.css
+dist/includes/*.js
+dist/includes/*.map
+
+# Workspaces
 *.code-workspace
-
-# Vim recover files
 *.sw[op]
-
-# Sublime Text Workspace
 *.sublime-project
 *.sublime-workspace
+.nova
