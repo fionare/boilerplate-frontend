@@ -34,16 +34,17 @@ const checkBranches = (done) => {
 	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
 		// set branch name as current branch
 		branch = currentBranch;
-		if (branch === "master") {
+		if (branch === "main") {
 			// branch is master
 			if (workingDirectoryModified) {
 				// master should only have merges
 				// if there are any configuration updates or framework updates, make sure it's committed before running gulp
-				console.log(chalk.inverse("[********]") + " * Master branch shouldn't have modified files, please check the changes");
+				console.log(chalk.inverse("[********]") + " * Main branch shouldn't have modified files, please check the changes");
 			} else {
-				console.log(chalk.inverse("[********]") + " * Welcome to master branch, please work on your designated branch");
-				console.log(chalk.inverse("[********]") + " - html/dev for html development");
-				console.log(chalk.inverse("[********]") + " - html/stable for html builds");
+				console.log(chalk.inverse("[********]") + " * Welcome to main branch, please work on your designated branch");
+				console.log(chalk.inverse("[********]") + " - html/dev/main for html development");
+				console.log(chalk.inverse("[********]") + " - html/staging for html builds for staging server");
+				console.log(chalk.inverse("[********]") + " - html/release for html builds for production server");
 				console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
 				console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
 				branchSwitcher(done);
@@ -55,15 +56,6 @@ const checkBranches = (done) => {
 	});
 };
 
-const preStableBuild = (done) => {
-	process.env.NODE_ENV = "production";
-	compile.setBranch("html/stable");
-	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
-		// set branch name as current branch
-		branch = currentBranch;
-		done();
-	});
-};
 
 const runOptions = (done) => {
 	let options = [];
@@ -72,15 +64,10 @@ const runOptions = (done) => {
 	process.env.NODE_ENV = "default";
 
 	switch (branch) {
-		case "master":
+		case "main":
 			options.push("Switch branch");
 			actions.push("switch");
 			break;
-		case "html/stable":
-			options.push("Build");
-			actions.push("buildtest");
-			options.push("Build and commit");
-			actions.push("build");
 		case "wp/dev":
 			options.push("Run preview server");
 			actions.push("preview");
@@ -90,9 +77,9 @@ const runOptions = (done) => {
 		default:
 			options.push("Run development server");
 			actions.push("dev");
-			options.push("Build");
+			options.push("Build test");
 			actions.push("buildtest");
-			options.push("Build to stable");
+			options.push("Build and commit");
 			actions.push("build");
 			options.push("Switch branch");
 			actions.push("switch");
@@ -153,31 +140,13 @@ const branchSwitcher = (done) => {
 };
 
 const branchBuildActions = (done) => {
-	if (branch === "html/stable") {
-		if (workingDirectoryModified) {
-			console.log(chalk.inverse("[********]") + " * html/stable branch shouldn't have modified files, please check the changes");
-			runOptions(done);
-		} else {
-			git.exec({ args: " log -1 --pretty=%B" }, (err, stdout) => {
-				if (stdout.substring(0, 5) === "Build") {
-					console.log(chalk.inverse("[********]") + " * Previous commit is a build, refuse to re-build");
-					runOptions(done);
-				} else {
-					runBuildMode(done);
-				}
-			});
+	console.log(chalk.inverse("[********]") + " * Running build on development branch...");
+	if (workingDirectoryModified) {
+		if (readlineSync.keyInYN(chalk.inverse("[********]") + " > Continue with committing changes and building?")) {
+			gulp.series(commitChanges, runBuildMode)();
 		}
 	} else {
-		console.log(chalk.inverse("[********]") + " * Running build on development branch...");
-		if (workingDirectoryModified) {
-			if (readlineSync.keyInYN(chalk.inverse("[********]") + " > Continue with committing changes, merging, and building?")) {
-				gulp.series(commitChanges, checkoutStableAndMerge, runBuildMode)();
-			}
-		} else {
-			if (readlineSync.keyInYN(chalk.inverse("[********]") + " > Continue with merging changes and building?")) {
-				gulp.series(checkoutStableAndMerge, runBuildMode)();
-			}
-		}
+		gulp.series(runBuildMode)();
 	}
 };
 
@@ -235,8 +204,6 @@ const runDevelopmentMode = (done) => {
 const branchDefaultActions = (done) => {
 	if (branch === "wp/dev") {
 		runPreviewMode(done);
-	} else if (branch === "html/stable") {
-		branchSwitcher(done);
 	} else {
 		runDevelopmentMode(done);
 	}
@@ -255,9 +222,6 @@ const commitChanges = (done) => {
 	});
 
 	let message = "Build commit";
-	if (branch !== "html/stable") {
-		message = "Pre-build commit (" + branch + ")";
-	}
 
 	const date = new Date().toString().substring(0, 24);
 
@@ -276,15 +240,6 @@ const commitChanges = (done) => {
 	});
 };
 
-const checkoutStableAndMerge = (done) => {
-	git.checkout("html/stable", () => {
-		git.merge(branch, () => {
-			branch = "html/stable";
-			done();
-		});
-	});
-};
-
 const checkoutWPAndMerge = (done) => {
 	git.checkout("wp/dev", () => {
 		git.merge(branch, () => {
@@ -296,4 +251,4 @@ const checkoutWPAndMerge = (done) => {
 
 exports.default = gulp.series(checkStatus, checkBranches);
 exports.dev = branchDefaultActions;
-exports.build = gulp.series(preStableBuild, checkoutStableAndMerge, compile.run, bump, checkStatus, commitChanges, checkStatus, checkoutWPAndMerge);
+exports.build = gulp.series(compile.run, bump, checkStatus, commitChanges, checkStatus, checkoutWPAndMerge);
