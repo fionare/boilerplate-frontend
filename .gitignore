@@ -93,6 +93,7 @@ dist/**/*.html
 dist/includes/*.css
 dist/includes/*.js
 dist/includes/*.map
+src/pages/tmp
 
 # Workspaces
 *.code-workspace
