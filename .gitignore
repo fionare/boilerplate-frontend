@@ -101,3 +101,4 @@ src/pages/tmp
 *.sublime-project
 *.sublime-workspace
 .nova
+.prettierignore
