@@ -31,9 +31,10 @@ const commit = () => {
 
 const setup = done => {
 	console.log(chalk.inverse("[********]") + " * Generating Branches");
-	git.branch("html/staging");
-	git.branch("html/release");
-	git.branch("wp/dev");
+	git.branch("html/build/staging");
+	git.branch("html/build/release");
+	git.branch("html/build/wp");
+	git.branch("wp/dev/main");
 	git.checkout('html/dev/main', {args:'-b'});
 
 	let remote = readlineSync.question(chalk.inverse("[********]") + " > Enter GitHub repository SSH/HTTPS: ");

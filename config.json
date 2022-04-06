@@ -6,6 +6,8 @@
 		"uri": ""
 	},
 	"basePath" : {
-		"html/stable": ""
+		"html/build/release": "",
+		"html/build/staging": "",
+		"html/build/wp": ""
 	}
 }

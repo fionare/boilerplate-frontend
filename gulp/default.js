@@ -43,9 +43,9 @@ const checkBranches = (done) => {
 			} else {
 				console.log(chalk.inverse("[********]") + " * Welcome to main branch, please work on your designated branch");
 				console.log(chalk.inverse("[********]") + " - html/dev/main for html development");
-				console.log(chalk.inverse("[********]") + " - html/staging for html builds for staging server");
-				console.log(chalk.inverse("[********]") + " - html/release for html builds for production server");
-				console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
+				console.log(chalk.inverse("[********]") + " - html/build/staging for html builds for staging server");
+				console.log(chalk.inverse("[********]") + " - html/build/release for html builds for production server");
+				console.log(chalk.inverse("[********]") + " - wp/dev/main for WordPress development");
 				console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
 				branchSwitcher(done);
 			}
@@ -68,7 +68,7 @@ const runOptions = (done) => {
 			options.push("Switch branch");
 			actions.push("switch");
 			break;
-		case "wp/dev":
+		case "wp/dev/main":
 			options.push("Run preview server");
 			actions.push("preview");
 			options.push("Switch branch");
