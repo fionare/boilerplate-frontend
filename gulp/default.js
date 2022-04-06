@@ -251,4 +251,4 @@ const checkoutWPAndMerge = (done) => {
 
 exports.default = gulp.series(checkStatus, checkBranches);
 exports.dev = branchDefaultActions;
-exports.build = gulp.series(compile.run, bump, checkStatus, commitChanges, checkStatus, checkoutWPAndMerge);
+exports.build = runBuildMode;
