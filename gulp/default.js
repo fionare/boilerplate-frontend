@@ -43,9 +43,9 @@ const checkBranches = (done) => {
 			} else {
 				console.log(chalk.inverse("[********]") + " * Welcome to main branch, please work on your designated branch");
 				console.log(chalk.inverse("[********]") + " - html/dev/main for html development");
-				console.log(chalk.inverse("[********]") + " - html/build/staging for html builds for staging server");
-				console.log(chalk.inverse("[********]") + " - html/build/release for html builds for production server");
-				console.log(chalk.inverse("[********]") + " - wp/dev/main for WordPress development");
+				console.log(chalk.inverse("[********]") + " - html/staging for html builds for staging server");
+				console.log(chalk.inverse("[********]") + " - html/release for html builds for production server");
+				console.log(chalk.inverse("[********]") + " - wp/dev for WordPress development");
 				console.log(chalk.inverse("[********]") + " * If the default branches are not available, please change branch with git command");
 				branchSwitcher(done);
 			}
@@ -55,7 +55,6 @@ const checkBranches = (done) => {
 		done();
 	});
 };
-
 
 const runOptions = (done) => {
 	let options = [];
@@ -68,7 +67,7 @@ const runOptions = (done) => {
 			options.push("Switch branch");
 			actions.push("switch");
 			break;
-		case "wp/dev/main":
+		case "wp/dev":
 			options.push("Run preview server");
 			actions.push("preview");
 			options.push("Switch branch");
@@ -172,19 +171,21 @@ const runTestBuildMode = (done) => {
 const runBuildMode = (done) => {
 	console.log(chalk.inverse("[********]") + " * Running build mode");
 	process.env.NODE_ENV = "production";
-	compile.setBranch(branch);
-	gulp.series(
-		compile.run,
-		bump,
-		(done) => {
-			return gulp.src(["./dist/**/*"]).pipe(gulp.dest("./build/"));
-		},
-		checkStatus,
-		commitChanges,
-		checkStatus,
-		runOptions
-	)();
-	done();
+	git.revParse({ args: "--abbrev-ref HEAD" }, function (err, currentBranch) {
+		// set branch name as current branch
+		branch = currentBranch;
+		compile.setBranch(branch);
+		gulp.series(
+			compile.run,
+			bump,
+			(done) => {
+				return gulp.src(["./dist/**/*"]).pipe(gulp.dest("./build/"));
+			},
+			checkStatus,
+			commitChanges
+		)();
+		done();
+	});
 };
 
 const runPreviewMode = (done) => {
