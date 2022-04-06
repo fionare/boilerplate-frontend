@@ -67,7 +67,7 @@ const runOptions = (done) => {
 			options.push("Switch branch");
 			actions.push("switch");
 			break;
-		case "wp/dev":
+		case "wp/dev/main":
 			options.push("Run preview server");
 			actions.push("preview");
 			options.push("Switch branch");
