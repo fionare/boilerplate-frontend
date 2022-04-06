@@ -16,3 +16,7 @@ Quick how to use:
 - Follow on screen instructions.
 - Run `gulp`.
 - Follow on screen instructions.
+
+Branch structure and flow:
+
+![Branch structure and flow](https://raw.githubusercontent.com/custommediakk/boilerplate-frontend/master/branchstructure.png)
