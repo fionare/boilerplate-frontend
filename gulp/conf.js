@@ -16,9 +16,9 @@ const paths = {
     ignore: ['dist/includes/**', '!dist/includes', '!dist/includes/lib', '!dist/assets', '!dist/images', '!dist/files']
   },
   html: {
-    entry: ['src/pages/*.html', 'src/pages/tmp/*.html'],
+    entry: ['src/pages/*.html','src/pages/*.njk', 'src/pages/tmp/*.html'],
     import: ['src/', 'src/includes', 'src/blocks'],
-    all: 'src/**/*.html'
+    all: ['src/**/*.html', 'src/**/*.njk']
   },
   css: {
     entry: 'src/styles.scss',
