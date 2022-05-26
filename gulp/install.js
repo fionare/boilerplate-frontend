@@ -31,9 +31,10 @@ const commit = () => {
 
 const setup = done => {
 	console.log(chalk.inverse("[********]") + " * Generating Branches");
+	git.branch("html/dev/main");
+	git.branch("html/dev/stable");
 	git.branch("html/build/staging");
 	git.branch("html/build/release");
-	git.branch("html/build/stable");
 	git.branch("html/build/wp");
 	git.branch("wp/dev/main");
 	git.checkout('html/dev/main', {args:'-b'});
