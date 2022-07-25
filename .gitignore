@@ -94,6 +94,8 @@ dist/includes/*.css
 dist/includes/*.js
 dist/includes/*.map
 src/pages/tmp
+_update*
+_wpbuild*
 
 # Workspaces
 *.code-workspace
